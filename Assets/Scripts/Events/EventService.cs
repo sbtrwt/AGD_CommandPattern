@@ -8,12 +8,11 @@ namespace Command.Events
 {
     public class EventService
     {
-        public GameEventController<int> OnMapSelected { get; private set; }
+        public GameEventController<int> OnBattleSelected { get; private set; }
 
         public EventService()
         {
-            OnMapSelected = new GameEventController<int>();
+            OnBattleSelected = new GameEventController<int>();
         }
-
     }
 }
