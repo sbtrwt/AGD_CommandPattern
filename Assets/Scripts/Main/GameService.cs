@@ -7,6 +7,8 @@ using Command.Player;
 using Command.UI;
 using Command.Commands;
 using Command.Events;
+using Command.Battle;
+using Command.Replay;
 
 namespace Command.Main
 {
@@ -17,7 +19,10 @@ namespace Command.Main
         public SoundService SoundService { get; private set; }
         public CommandInvoker CommandInvoker { get; private set; }
         public InputService InputService { get; private set; }
+        public BattleService BattleService { get; private set; }
         public PlayerService PlayerService { get; private set; }
+        public ReplayService ReplayService { get; private set; }
+
         [SerializeField] private UIService uiService;
         public UIService UIService => uiService;
 
@@ -31,12 +36,14 @@ namespace Command.Main
 
         private void Start()
         {
-            EventService = new EventService();
             SoundService = new SoundService(soundScriptableObject, sfxSource, bgMusicSource);
+            EventService = new EventService();
             CommandInvoker = new CommandInvoker();
             InputService = new InputService();
-            PlayerService = new PlayerService(battleScriptableObjects);
-            uiService.ShowBattleSelection(battleScriptableObjects.Count);
+            BattleService = new BattleService(battleScriptableObjects);
+            PlayerService = new PlayerService();
+            ReplayService = new ReplayService();
+            uiService.ShowBattleSelectionView(battleScriptableObjects.Count);
         }
 
         private void Update() => InputService.UpdateInputService();
