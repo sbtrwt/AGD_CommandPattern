@@ -8,5 +8,6 @@ namespace Command.Player
     {
         public int PlayerID;
         public List<UnitScriptableObject> UnitData;
+        public List<Vector3> UnitPositions;
     }
 }
