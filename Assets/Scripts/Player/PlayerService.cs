@@ -7,52 +7,56 @@ namespace Command.Player
 {
     public class PlayerService
     {
-        private List<BattleScriptableObject> battleData;
         private PlayerController player1;
         private PlayerController player2;
 
         private int currentTurnNumber;
         private PlayerController activePlayer;
 
-        public PlayerService(List<BattleScriptableObject> battleScriptableObjects)
+        public int ActivePlayerID => activePlayer.PlayerID;
+        public int ActiveUnitID => activePlayer.ActiveUnitID;
+
+        public void Init(PlayerScriptableObject player1Data, PlayerScriptableObject player2Data)
         {
-            battleData = battleScriptableObjects;
+            CreatePlayers(player1Data, player2Data);
+            StartTurnSequence();
         }
 
-        public void InitializeBattle(int BattleID)
+        private void CreatePlayers(PlayerScriptableObject player1Data, PlayerScriptableObject player2Data)
         {
-            BattleScriptableObject battleConfig = battleData.Find(config => config.BattleID == BattleID);
-            player1 = new PlayerController(this, battleConfig.Player1Data);
-            player2 = new PlayerController(this, battleConfig.Player2Data);
+            player1 = new PlayerController(this, player1Data);
+            player2 = new PlayerController(this, player2Data);
+        }
 
+        private void StartTurnSequence()
+        {
             currentTurnNumber = 0;
             StartNextTurn();
         }
 
         private void StartNextTurn()
         {
-            currentTurnNumber++;
-            activePlayer = player1;
+            SetActivePlayer();
+            
+            if (activePlayer == player1)
+                currentTurnNumber++;
+            
             activePlayer.StartPlayerTurn();
         }
 
-        public void OnPlayerTurnCompleted()
+        private void SetActivePlayer()
         {
-            if(activePlayer == player1)
-            {
-                activePlayer = player2;
-                activePlayer.StartPlayerTurn();
-            }
-            else
-            {
-                StartNextTurn();
-            }
+            if (activePlayer == null)
+                activePlayer = player1;
+            else 
+                activePlayer = activePlayer == player1 ? player2 : player1;
         }
 
-        public int GetActivePlayerId() => activePlayer.PlayerID;
+        public void OnPlayerTurnCompleted() => StartNextTurn();
 
-        public int GetActiveUnitId() => activePlayer.ActiveUnitID;
 
+
+        // After Initialization is Done: 
 
         public void ProcessUnitCommand(IUnitCommand commandToProcess)
         {
