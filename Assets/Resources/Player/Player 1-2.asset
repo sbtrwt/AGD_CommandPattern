@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 053d310f426c4b8459cd32f46e3491d4, type: 3}
   m_Name: Player 1-2
   m_EditorClassIdentifier: 
-  PlayerID: 1
-  UnitData: []
+  PlayerID: 2
+  UnitData:
+  - {fileID: 11400000, guid: 27e090985b1ec384fb5e16932842937d, type: 2}
+  - {fileID: 11400000, guid: 27e090985b1ec384fb5e16932842937d, type: 2}
+  UnitPositions:
+  - {x: 5, y: 2, z: 0}
+  - {x: 5, y: 0, z: 0}
