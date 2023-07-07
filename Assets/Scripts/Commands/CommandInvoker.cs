@@ -19,6 +19,7 @@ namespace Command.Commands
 
         public void Undo() => commandRegistry.Pop().Undo();
 
+
         public void SetReplayStack()
         {
             // This is called when the level has ended.
