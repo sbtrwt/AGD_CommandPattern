@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Command.UI
 {
-    public class BattleSelectionView : MonoBehaviour, IUIView
+    public class BattleSelectionUIView : MonoBehaviour, IUIView
     {
         [SerializeField] private Transform battleButtonContainer;
 

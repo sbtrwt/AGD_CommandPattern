@@ -4,23 +4,22 @@ using Command.Main;
 
 namespace Command.UI
 {
-    public class BattleSelectionController : IUIController
+    public class BattleSelectionUIController : IUIController
     {
-        private BattleSelectionView battleSelectionView;
+        private BattleSelectionUIView battleSelectionView;
         private BattleButtonView battleButtonPrefab;
         private List<BattleButtonView> battleButtons;
 
-        public BattleSelectionController(BattleSelectionView battleSelectionView, BattleButtonView battleButtonPrefab)
+        public BattleSelectionUIController(BattleSelectionUIView battleSelectionView, BattleButtonView battleButtonPrefab)
         {
             this.battleSelectionView = battleSelectionView;
             this.battleButtonPrefab = battleButtonPrefab;
-            InitializeController(battleButtonPrefab);
+            InitializeController();
         }
 
-        private void InitializeController(BattleButtonView battleButtonPrefab)
+        private void InitializeController()
         {
             battleButtons = new List<BattleButtonView>();
-            ResetBattleButtons();
             Hide();
         }
 
@@ -32,8 +31,8 @@ namespace Command.UI
 
         public void Hide()
         {
-            battleSelectionView.DisableView();
             ResetBattleButtons();
+            battleSelectionView.DisableView();
         }
 
         private void ResetBattleButtons()
@@ -52,6 +51,7 @@ namespace Command.UI
             }
         }
 
+        // To Learn more about Events and Observer Pattern, check out the course list here: https://outscal.com/courses
         public void OnBattleSelected(int battleId)
         {
             GameService.Instance.EventService.OnBattleSelected.InvokeEvent(battleId);
