@@ -20,23 +20,28 @@ namespace Command.Player
         {
             this.playerService = playerService;
             playerId = playerScriptableObject.PlayerID;
-            InitializeUnits(playerScriptableObject.UnitData);
+            CreateUnits(playerScriptableObject.UnitData, playerScriptableObject.UnitPositions);
         }
 
-        private void InitializeUnits(List<UnitScriptableObject> unitScriptableObjects)
+        private void CreateUnits(List<UnitScriptableObject> unitScriptableObjects, List<Vector3> unitPositions)
         {
-            units.Clear();
+            units = new List<UnitController>();
 
-            foreach (UnitScriptableObject unitSO in unitScriptableObjects)
+            for(int i=0; i<unitScriptableObjects.Count; i++)
             {
-                units.Add(new UnitController(this, unitSO));
+                units.Add(new UnitController(this, unitScriptableObjects[i], unitPositions[i]));
             }
         }
 
         public void StartPlayerTurn()
         {
             activeUnitIndex = 0;
-            units[activeUnitIndex].StartUnitTurn();
+            ResetAllUnitStates();
+
+            if (IsCurrentUnitAlive())
+                units[activeUnitIndex].StartUnitTurn();
+            else
+                OnUnitTurnEnded();
         }
 
         public void OnUnitTurnEnded()
@@ -52,12 +57,17 @@ namespace Command.Player
             }
         }
 
-        private bool AllUnitsUsed() => units.TrueForAll(unit => unit.CurrentUnitState == UnitState.USED);
+        private void ResetAllUnitStates() => units.ForEach(unit => unit.SetUsedState(UnitUsedState.NOT_USED));
 
-        private void EndPlayerTurn()
-        {
-            playerService.OnPlayerTurnCompleted();
-        }
+        private bool IsCurrentUnitAlive() => units[activeUnitIndex].IsAlive();
+
+        private bool AllUnitsUsed() => units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED);
+
+        private void EndPlayerTurn() => playerService.OnPlayerTurnCompleted();
+
+
+
+        // After Initialization is Done: 
 
         public UnitController GetUnitByID(int unitId) => units.Find(unit => unit.UnitID == unitId);
 
