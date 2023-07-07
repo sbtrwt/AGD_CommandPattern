@@ -8,26 +8,31 @@ namespace Command.Input
 {
     public class InputService
     {
-        private InputState currentState;
-        private MouseInputHandler mouseInputHandlers;
+        private MouseInputHandler mouseInputHandler;
 
-        private CommandType selectedCommand;
+        private InputState currentState;
+        private CommandType selectedCommandType;
 
         public InputService()
         {
-            mouseInputHandlers = new MouseInputHandler(this);
-            currentState = InputState.SELECTING_ACTION;
+            mouseInputHandler = new MouseInputHandler(this);
+            SetInputState(InputState.INACTIVE);
+            SubscribeToEvents();
         }
+
+        public void SetInputState(InputState inputStateToSet) => currentState = inputStateToSet;
+
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnActionSelected.AddListener(OnActionSelected);
 
         public void UpdateInputService()
         {
             switch(currentState)
             {
                 case InputState.SELECTING_ACTION:
-                    mouseInputHandlers.HandleActionSelction();
+
                     break;
                 case InputState.SELECTING_TARGET:
-                    mouseInputHandlers.TrySelectingTargetUnit();
+                    mouseInputHandler.HandleTargetSelection();
                     break;
                 case InputState.EXECUTING_INPUT:
 
@@ -39,21 +44,28 @@ namespace Command.Input
 
         }
 
-        public void SetInputState(InputState inputStateToSet) => currentState = inputStateToSet;
-
-        public void OnActionSelected(CommandType selectedCommand)
+        public void OnActionSelected(CommandType selectedCommandType)
         {
-            this.selectedCommand = selectedCommand;
-            GameService.Instance.UIService.OnActionSelected(selectedCommand);
-            currentState = InputState.SELECTING_TARGET;
+            this.selectedCommandType = selectedCommandType;
+            Debug.Log($"The Action Selected is {selectedCommandType}");
+            SetInputState(InputState.SELECTING_TARGET);
         }
+
+
+        // TODO After Target Selection is done.
+
 
         public void OnTargetSelected(UnitController targetUnit)
         {
-            CommandData commandData = GetCommandData(targetUnit);
+            /*  TODO:
+             *  Create a new command for the selected command type.
+             *  Push this newly created Unit Action Command down the stream through the GameService.
+             */
+
+            /*CommandData commandData = GetCommandData(targetUnit);
             IUnitCommand commandToProcess;
 
-            switch (selectedCommand)
+            switch (selectedCommandType)
             {
                 case CommandType.Attack:
                     commandToProcess = new AttackCommand(commandData);
@@ -62,16 +74,16 @@ namespace Command.Input
                     commandToProcess = new HealCommand(commandData);
                     break;
                 default:
-                    throw new System.Exception($"No Command found of type: {selectedCommand}");
+                    throw new System.Exception($"No Command found of type: {selectedCommandType}");
             }
 
-            GameService.Instance.ProcessUnitCommand(commandToProcess);
+            GameService.Instance.ProcessUnitCommand(commandToProcess);*/
         }
 
         private CommandData GetCommandData(UnitController targetUnit)
         {
-            int playerID = GameService.Instance.PlayerService.GetActivePlayerId();
-            int actorUnitId = GameService.Instance.PlayerService.GetActiveUnitId();
+            int playerID = GameService.Instance.PlayerService.ActivePlayerID;
+            int actorUnitId = GameService.Instance.PlayerService.ActiveUnitID;
             return new CommandData(playerID, actorUnitId, targetUnit.Owner.PlayerID, targetUnit.UnitID);
         }
 

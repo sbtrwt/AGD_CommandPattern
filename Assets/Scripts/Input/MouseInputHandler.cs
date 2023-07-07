@@ -1,3 +1,7 @@
+using Command.Main;
+using Command.Player;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Command.Input
@@ -11,14 +15,6 @@ namespace Command.Input
             this.inputService = inputService;
         }
 
-        public void HandleActionSelction()
-        {
-            if(UnityEngine.Input.GetMouseButtonDown(0))
-            {
-                TrySelectingAction();
-            }
-        }
-
         public void HandleTargetSelection()
         {
             if(UnityEngine.Input.GetMouseButtonDown(0))
@@ -27,26 +23,42 @@ namespace Command.Input
             }
         }
 
-        private void TrySelectingAction()
-        {
-            // Try Selecting an action here.
-            // Inform the Input Service what Action has been Selected.
-
-            // If an action is selected, create a command for it
-            // Pass that command through the game service, which pushes it down the stream.
-            // Parallely also let the ReplayService know what command has been executed.
-            // Whenever that command needs to be executed, it is executed through the command invoker.
-        }
-
         public void TrySelectingTargetUnit()
         {
-            // Try Selecting a unit here.
-            // Inform the Input Service what Target has been selected.
-
-            // If a unit is selected, create a command for it
-            // Pass that command through the game service, which pushes it down the stream.
-            // Parallely also let the ReplayService know what command has been executed.
-            // Whenever that command needs to be executed, it is executed through the command invoker.
+            Vector3 mouseWorldPosition = GetMouseWorldPosition();
+            if(IsTargetSelected(mouseWorldPosition, out UnitView selectedUnit))
+            {
+                Debug.Log($"Will highlight selected target", selectedUnit);
+                inputService.OnTargetSelected(selectedUnit.Controller);
+            }
         }
+
+        private Vector3 GetMouseWorldPosition()
+        {
+            var mousePosition = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            return new Vector3(mousePosition.x, mousePosition.y, 0);
+        }
+
+        private bool IsTargetSelected(Vector3 mousePosition, out UnitView selectedUnit)
+        {
+            Collider2D collider = Physics2D.OverlapCircle(mousePosition, 0.1f);
+
+            if(IsUnit(collider))
+            {
+                selectedUnit = collider.GetComponent<UnitView>();
+                if(ValidateUnit(selectedUnit))
+                {
+                    return true;
+                }
+            }
+
+            selectedUnit = null;
+            return false;
+        }
+
+        private bool IsUnit(Collider2D collider) => collider != null && collider.GetComponent<UnitView>() != null;
+
+        private bool ValidateUnit(UnitView selectedUnit) => selectedUnit.Controller.Owner.PlayerID != GameService.Instance.PlayerService.ActivePlayerID;
+
     }
 }
