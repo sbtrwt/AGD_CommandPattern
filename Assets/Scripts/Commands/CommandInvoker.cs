@@ -1,12 +1,15 @@
 using Command.Main;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Command.Commands
 {
     public class CommandInvoker
     {
         private Stack<ICommand> commandRegistry = new Stack<ICommand>();
+
+        public CommandInvoker() => SubscribeToEvents();
+
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
 
         public void ProcessCommand(ICommand commandToProcess)
         {
@@ -24,10 +27,9 @@ namespace Command.Commands
 
         public void SetReplayStack()
         {
-            // This is called when the level has ended.
-            // It informs the replay service what is the sequence of command that will be needed to replay the game.
+            GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
+            commandRegistry.Clear();
         }
-
         private void UpdateInputState()
         {
             if(GameService.Instance.ReplayService.ReplayState == Replay.ReplayState.ACTIVE)

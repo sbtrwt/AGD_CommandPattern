@@ -1,4 +1,3 @@
-
 namespace Command.Commands
 {
     [System.Serializable]

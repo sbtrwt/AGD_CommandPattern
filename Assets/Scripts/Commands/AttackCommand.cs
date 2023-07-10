@@ -1,4 +1,3 @@
-using UnityEngine;
 using Command.Main;
 
 namespace Command.Commands
@@ -28,6 +27,5 @@ namespace Command.Commands
         }
 
         public override bool WillHitTarget() => true;
-
     }
 }
