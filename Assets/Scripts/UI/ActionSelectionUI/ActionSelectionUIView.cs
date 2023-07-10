@@ -13,5 +13,7 @@ namespace Command.UI
         public void EnableView() => gameObject.SetActive(true);
 
         public ActionButtonView AddButton(ActionButtonView actionButtonPrefab) => Instantiate(actionButtonPrefab, actionButtonContainer);
+
+        public void RemoveButton(ActionButtonView buttonToDestroy) => Destroy(buttonToDestroy.gameObject);
     }
 }

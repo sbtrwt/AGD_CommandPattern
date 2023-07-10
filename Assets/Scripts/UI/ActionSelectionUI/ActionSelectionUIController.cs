@@ -27,6 +27,7 @@ namespace Command.UI
 
         public void Show(List<CommandType> executableCommands)
         {
+            ResetActionButtons();
             actionSelectionView.EnableView();
             CreateActionButtons(executableCommands);
         }
@@ -39,7 +40,7 @@ namespace Command.UI
 
         private void ResetActionButtons()
         {
-            actionButtons.ForEach(button => Object.Destroy(button));
+            actionButtons.ForEach(button => actionSelectionView.RemoveButton(button));
             actionButtons.Clear();
         }
 
@@ -50,6 +51,7 @@ namespace Command.UI
                 var button = actionSelectionView.AddButton(actionButtonPrefab);
                 button.SetOwner(this);
                 button.SetCommandType(commandType);
+                actionButtons.Add(button);
             }
         }
 
