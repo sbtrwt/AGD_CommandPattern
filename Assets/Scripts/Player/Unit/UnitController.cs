@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Command.Main;
-using Command.Input;
 using Command.Commands;
 
 namespace Command.Player
@@ -48,7 +45,6 @@ namespace Command.Player
         {
             unitView.SetUnitIndicator(true);
             GameService.Instance.UIService.ShowActionSelectionView(unitScriptableObject.executableCommands);
-            GameService.Instance.InputService.SetInputState(InputState.SELECTING_ACTION);
         }
 
         private void SetAliveState(UnitAliveState stateToSet) => aliveState = stateToSet;
@@ -76,6 +72,12 @@ namespace Command.Player
             unitView.UpdateHealthBar((float) currentHealth / unitScriptableObject.MaxHealth);
         }
 
+        public void RestoreHealth(int healthToRestore)
+        {
+            currentHealth = currentHealth + healthToRestore > unitScriptableObject.MaxHealth ? unitScriptableObject.MaxHealth : currentHealth + healthToRestore;
+            unitView.UpdateHealthBar((float)currentHealth / unitScriptableObject.MaxHealth);
+        }
+
         private void UnitDied()
         {
             aliveState = UnitAliveState.DEAD;
@@ -99,6 +101,8 @@ namespace Command.Player
             Owner.OnUnitTurnEnded();
             unitView.SetUnitIndicator(false);
         }
+
+        public void Destroy() => Object.Destroy(unitView.gameObject);
 
     }
 

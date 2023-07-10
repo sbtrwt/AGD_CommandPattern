@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Command.Commands;
@@ -46,7 +45,10 @@ namespace Command.Player
         {
             if(AllUnitsUsed())
             {
-                EndPlayerTurn();
+                if (AllUnitsDead())
+                    playerService.PlayerDied(this);
+                else 
+                    EndPlayerTurn();
             }
             else
             {
@@ -59,11 +61,19 @@ namespace Command.Player
 
         private bool IsCurrentUnitAlive() => units[activeUnitIndex].IsAlive();
 
-        private bool AllUnitsUsed() => units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED);
+        private bool AllUnitsUsed() => units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED || !unit.IsAlive());
+
+        private bool AllUnitsDead() => units.TrueForAll(unit => !unit.IsAlive());
 
         private void EndPlayerTurn() => playerService.OnPlayerTurnCompleted();
 
         public UnitController GetUnitByID(int unitId) => units.Find(unit => unit.UnitID == unitId);
+
+        public void DestroyAllUnits()
+        {
+            units.ForEach(unit => unit.Destroy());
+            units.Clear();
+        }
 
         public void ProcessUnitCommand(UnitCommand commandToProcess) => GetUnitByID(commandToProcess.ActorUnitID).ProcessUnitCommand(commandToProcess);
     }

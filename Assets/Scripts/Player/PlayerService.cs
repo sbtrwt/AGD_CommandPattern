@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Command.Commands;
+using Command.Main;
 
 namespace Command.Player
 {
@@ -18,8 +16,18 @@ namespace Command.Player
 
         public void Init(PlayerScriptableObject player1Data, PlayerScriptableObject player2Data)
         {
+            CleanPlayers();
             CreatePlayers(player1Data, player2Data);
             StartTurnSequence();
+        }
+
+        private void CleanPlayers()
+        {
+            if(player1 == null || player2 == null)
+                return;
+
+            player1.DestroyAllUnits();
+            player2.DestroyAllUnits();
         }
 
         private void CreatePlayers(PlayerScriptableObject player1Data, PlayerScriptableObject player2Data)
@@ -39,7 +47,10 @@ namespace Command.Player
             SetActivePlayer();
             
             if (activePlayer == player1)
+            {
                 currentTurnNumber++;
+                GameService.Instance.UIService.UpdateTurnNumber(currentTurnNumber);
+            }
             
             activePlayer.StartPlayerTurn();
         }
@@ -78,6 +89,17 @@ namespace Command.Player
                 throw new System.Exception($"No Player found for the given Player ID: {playerId}");
         }
 
+        public void PlayerDied(PlayerController deadPlayer)
+        {
+            int winnerId;
+
+            if (deadPlayer == player1)
+                winnerId = player2.PlayerID;
+            else
+                winnerId = player1.PlayerID;
+
+            GameService.Instance.UIService.ShowBattleEndUI(winnerId);
+        }
 
     }
 }

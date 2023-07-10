@@ -12,9 +12,5 @@ namespace Command.Player
         public int MaxHealth;
         public int Power;
         public List<CommandType> executableCommands;
-
-        // All the other Unit related Data:
-        // Prefab,
-        // Executable Command Types.
     }
 }
