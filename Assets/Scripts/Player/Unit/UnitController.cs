@@ -13,8 +13,8 @@ namespace Command.Player
         public int UnitID { get; private set; }
         private UnitAliveState aliveState;
         private int currentHealth;
+        public int CurrentPower;
         public UnitUsedState UsedState { get; private set; }
-        public int Power => unitScriptableObject.Power;
 
         public UnitController(PlayerController owner, UnitScriptableObject unitScriptableObject, Vector3 unitPosition)
         {
@@ -37,6 +37,7 @@ namespace Command.Player
         private void InitializeVariables()
         {
             currentHealth = unitScriptableObject.MaxHealth;
+            CurrentPower = unitScriptableObject.Power;
             SetAliveState(UnitAliveState.ALIVE);
             SetUsedState(UnitUsedState.NOT_USED);
         }

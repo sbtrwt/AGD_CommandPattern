@@ -16,10 +16,7 @@ namespace Command.Commands
             willHitTarget = WillHitTarget();
         }
 
-        public override void Execute()
-        {
-            GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
-        }
+        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
 
         public override void Undo()
         {
@@ -28,7 +25,7 @@ namespace Command.Commands
                 if (!targetUnit.IsAlive())
                     targetUnit.Revive();
 
-                targetUnit.RestoreHealth(actorUnit.Power);
+                targetUnit.RestoreHealth(actorUnit.CurrentPower);
                 actorUnit.Owner.ResetCurrentActivePlayer();
             }
         }

@@ -25,7 +25,7 @@ namespace Command.Commands
         {
             if (willHitTarget)
             {
-                targetUnit.TakeDamage(actorUnit.Power);
+                targetUnit.TakeDamage(actorUnit.CurrentPower);
                 actorUnit.Owner.ResetCurrentActivePlayer();
             }
         }

@@ -61,10 +61,17 @@ namespace Command.Input
 
         private bool ValidateUnit(UnitView selectedUnit)
         {
-            if (targetTypeToSelect == TargetType.Friendly)
-                return selectedUnit.Controller.Owner.PlayerID == GameService.Instance.PlayerService.ActivePlayerID && selectedUnit.Controller.IsAlive();
-            else
-                return selectedUnit.Controller.Owner.PlayerID != GameService.Instance.PlayerService.ActivePlayerID && selectedUnit.Controller.IsAlive();
+            switch(targetTypeToSelect)
+            {
+                case TargetType.Friendly:
+                    return selectedUnit.Controller.Owner.PlayerID == GameService.Instance.PlayerService.ActivePlayerID && selectedUnit.Controller.IsAlive();
+                case TargetType.Enemy:
+                    return selectedUnit.Controller.Owner.PlayerID != GameService.Instance.PlayerService.ActivePlayerID && selectedUnit.Controller.IsAlive();
+                case TargetType.Self:
+                    return selectedUnit.Controller.UnitID == GameService.Instance.PlayerService.ActiveUnitID && selectedUnit.Controller.IsAlive();
+                default:
+                    throw new System.Exception($"Target Type to be selected might be null. Cannot Validate Selected Unit. Current Target Type to be selected is: {targetTypeToSelect}");
+            }
         }
     }
 }

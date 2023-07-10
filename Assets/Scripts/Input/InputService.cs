@@ -52,13 +52,7 @@ namespace Command.Input
             SetTargetType(selectedCommandType);
         }
 
-        private void SetTargetType(CommandType selectedCommandType)
-        {
-            if (selectedCommandType == CommandType.Heal)
-                targetType = TargetType.Friendly;
-            else
-                targetType = TargetType.Enemy;
-        }
+        private void SetTargetType(CommandType selectedCommandType) => targetType = GameService.Instance.ActionService.GetTargetTypeForAction(selectedCommandType);
 
         public void OnTargetSelected(UnitController targetUnit)
         {
@@ -90,6 +84,7 @@ namespace Command.Input
     public enum TargetType
     {
         Friendly,
-        Enemy
+        Enemy,
+        Self
     }
 }
