@@ -1,13 +1,15 @@
+using Command.Commands;
 using Command.Player;
-using UnityEngine;
 
-namespace Command.Action
+namespace Command.Actions
 {
     public class HealAction : IAction
     {
         public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            Debug.Log($"Heal Action is performed.");
+            actorUnit.PlayActionAnimation(CommandType.Heal);
+            if (successful)
+                targetUnit.RestoreHealth(actorUnit.Power);
         }
     }
 }

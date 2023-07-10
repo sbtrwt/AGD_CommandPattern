@@ -1,8 +1,7 @@
 using Command.Commands;
 using Command.Player;
-using UnityEngine;
 
-namespace Command.Action
+namespace Command.Actions
 {
     public class AttackAction : IAction
     {

@@ -1,9 +1,7 @@
 using Command.Commands;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Command.Action
+namespace Command.Actions
 {
     public class ActionService
     {

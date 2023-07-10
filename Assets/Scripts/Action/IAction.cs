@@ -1,6 +1,6 @@
 using Command.Player;
 
-namespace Command.Action
+namespace Command.Actions
 {
     public interface IAction
     {
