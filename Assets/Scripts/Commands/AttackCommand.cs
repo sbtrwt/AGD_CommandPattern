@@ -1,47 +1,33 @@
-using Command.Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Command.Main;
 
 namespace Command.Commands
 {
-    public class AttackCommand : IUnitCommand
+    public class AttackCommand : UnitCommand
     {
-        private CommandData commandData;
-        private PlayerController ownerPlayer;
-        private UnitController ownerUnit;
-        private UnitController targetUnit;
+        private bool willHitTarget;
 
-        public int OwnerPlayerID => commandData.OwnerPlayerID;
-        public int OwnerUnitID => commandData.OwnerUnitID;
-        public int TargetPlayerID => commandData.TargetPlayerID;
-        public int TargetUnitID => commandData.TargetUnitID;
+        public AttackCommand(int actorUnitId, int targetUnitId, int actorPlayerId, int targetPlayerId)
+        {
+            ActorUnitID = actorUnitId;
+            TargetUnitID = targetUnitId;
+            ActorPlayerID = actorPlayerId;
+            TargetPlayerID = targetPlayerId;
 
-        public AttackCommand(CommandData commandData) => this.commandData = commandData;
+            willHitTarget = WillHitTarget();
+        }
 
-        public void Execute()
+        public override void Execute()
+        {
+            GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
+        }
+
+        public override void Undo()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Undo()
-        {
-            throw new System.NotImplementedException();
-        }
+        public override bool WillHitTarget() => true;
 
-        public void SetPlayer(PlayerController playerToSet)
-        {
-            ownerPlayer = playerToSet;
-        }
-
-        public void SetActorUnit(UnitController ownerUnit)
-        {
-            this.ownerUnit = ownerUnit;
-        }
-
-        public void SetTargetUnit(UnitController targetUnit)
-        {
-            this.targetUnit = targetUnit;
-        }
     }
 }
