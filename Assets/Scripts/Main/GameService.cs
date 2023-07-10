@@ -9,6 +9,7 @@ using Command.Commands;
 using Command.Events;
 using Command.Battle;
 using Command.Replay;
+using Command.Action;
 
 namespace Command.Main
 {
@@ -17,6 +18,7 @@ namespace Command.Main
         // Services:
         public EventService EventService { get; private set; }
         public SoundService SoundService { get; private set; }
+        public ActionService ActionService { get; private set; }
         public CommandInvoker CommandInvoker { get; private set; }
         public InputService InputService { get; private set; }
         public BattleService BattleService { get; private set; }
@@ -38,6 +40,7 @@ namespace Command.Main
         {
             SoundService = new SoundService(soundScriptableObject, sfxSource, bgMusicSource);
             EventService = new EventService();
+            ActionService = new ActionService();
             CommandInvoker = new CommandInvoker();
             InputService = new InputService();
             BattleService = new BattleService(battleScriptableObjects);
@@ -48,6 +51,6 @@ namespace Command.Main
 
         private void Update() => InputService.UpdateInputService();
 
-        public void ProcessUnitCommand(IUnitCommand commandToProcess) => PlayerService.ProcessUnitCommand(commandToProcess);
+        public void ProcessUnitCommand(UnitCommand commandToProcess) => PlayerService.ProcessUnitCommand(commandToProcess);
     }
 }
