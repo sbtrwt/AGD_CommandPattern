@@ -9,15 +9,18 @@ namespace Command.Input
     public class MouseInputHandler
     {
         private InputService inputService;
+        private TargetType targetTypeToSelect;
 
         public MouseInputHandler(InputService inputService)
         {
             this.inputService = inputService;
         }
 
-        public void HandleTargetSelection()
+        public void HandleTargetSelection(TargetType targetTypeToSelect)
         {
-            if(UnityEngine.Input.GetMouseButtonDown(0))
+            this.targetTypeToSelect = targetTypeToSelect;
+
+            if (UnityEngine.Input.GetMouseButtonDown(0))
             {
                 TrySelectingTargetUnit();
             }
@@ -58,7 +61,12 @@ namespace Command.Input
 
         private bool IsUnit(Collider2D collider) => collider != null && collider.GetComponent<UnitView>() != null;
 
-        private bool ValidateUnit(UnitView selectedUnit) => selectedUnit.Controller.Owner.PlayerID != GameService.Instance.PlayerService.ActivePlayerID;
-
+        private bool ValidateUnit(UnitView selectedUnit)
+        {
+            if (targetTypeToSelect == TargetType.Friendly)
+                return selectedUnit.Controller.Owner.PlayerID == GameService.Instance.PlayerService.ActivePlayerID;
+            else
+                return selectedUnit.Controller.Owner.PlayerID != GameService.Instance.PlayerService.ActivePlayerID;
+        }
     }
 }
