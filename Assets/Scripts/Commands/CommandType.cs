@@ -4,6 +4,7 @@ namespace Command.Commands
     public enum CommandType
     {
         Attack,
-        Heal
+        Heal,
+        AttackStance
     }
 }

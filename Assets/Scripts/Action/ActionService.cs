@@ -1,4 +1,5 @@
 using Command.Commands;
+using Command.Input;
 using System.Collections.Generic;
 
 namespace Command.Actions
@@ -7,16 +8,14 @@ namespace Command.Actions
     {
         private Dictionary<CommandType, IAction> actions;
 
-        public ActionService()
-        {
-            CreateActions();
-        }
+        public ActionService() => CreateActions();
 
         private void CreateActions()
         {
             actions = new Dictionary<CommandType, IAction>();
             actions.Add(CommandType.Attack, new AttackAction());
             actions.Add(CommandType.Heal, new HealAction());
+            actions.Add(CommandType.AttackStance, new AttackStanceAction());
         }
 
         public IAction GetActionByType(CommandType type)
@@ -26,5 +25,7 @@ namespace Command.Actions
             else
                 throw new System.Exception($"No Action found for the type {type} in the dictionary");
         }
+
+        public TargetType GetTargetTypeForAction(CommandType actionType) => actions[actionType].TargetType;
     }
 }
