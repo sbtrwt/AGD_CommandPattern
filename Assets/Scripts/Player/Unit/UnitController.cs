@@ -15,7 +15,9 @@ namespace Command.Player
 
         public int UnitID { get; private set; }
         private UnitAliveState aliveState;
+        private int currentHealth;
         public UnitUsedState UsedState { get; private set; }
+        public int Power => unitScriptableObject.Power;
 
         public UnitController(PlayerController owner, UnitScriptableObject unitScriptableObject, Vector3 unitPosition)
         {
@@ -37,6 +39,7 @@ namespace Command.Player
 
         private void InitializeVariables()
         {
+            currentHealth = unitScriptableObject.MaxHealth;
             SetAliveState(UnitAliveState.ALIVE);
             SetUsedState(UnitUsedState.NOT_USED);
         }
@@ -48,17 +51,54 @@ namespace Command.Player
             GameService.Instance.InputService.SetInputState(InputState.SELECTING_ACTION);
         }
 
-        public void ProcessUnitCommand(IUnitCommand commandToProcess)
-        {
-            commandToProcess.SetActorUnit(this);
-            GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
-        }
-
         private void SetAliveState(UnitAliveState stateToSet) => aliveState = stateToSet;
 
         public void SetUsedState(UnitUsedState stateToSet) => UsedState = stateToSet;
 
         public bool IsAlive() => aliveState == UnitAliveState.ALIVE;
+
+        public void ProcessUnitCommand(UnitCommand commandToProcess) => GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
+
+        public void TakeDamage(int damageToTake)
+        {
+            currentHealth -= damageToTake;
+
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                UnitDied();
+            }
+            else
+            {
+                // Play Hit Animation ???
+            }
+
+            unitView.UpdateHealthBar((float) currentHealth / unitScriptableObject.MaxHealth);
+        }
+
+        private void UnitDied()
+        {
+            aliveState = UnitAliveState.DEAD;
+            // Play Death Animation.
+        }
+
+        public void PlayActionAnimation(CommandType actionType)
+        {
+            if (actionType == unitScriptableObject.executableCommands[0])
+                unitView.PlayAnimation(UnitAnimations.ACTION1);
+            else if (actionType == unitScriptableObject.executableCommands[1])
+                unitView.PlayAnimation(UnitAnimations.ACTION2);
+            else
+                throw new System.Exception($"No Animation found for the action type : {actionType}");
+        }
+
+        public void OnActionExecuted()
+        {
+            Debug.Log("An Action has been executed.");
+            SetUsedState(UnitUsedState.USED);
+            Owner.OnUnitTurnEnded();
+            unitView.SetUnitIndicator(false);
+        }
 
     }
 
