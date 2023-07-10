@@ -5,32 +5,25 @@ using Command.Player;
 
 namespace Command.Commands
 {
-    public interface IUnitCommand : ICommand
+    public abstract class UnitCommand : ICommand
     {
-        public int OwnerPlayerID { get; }
-        public int OwnerUnitID { get; }
-        public int TargetPlayerID { get; }
-        public int TargetUnitID { get; }
-
-        public void SetPlayer(PlayerController playerToSet);
-        public void SetActorUnit(UnitController ownerUnit);
-        public void SetTargetUnit(UnitController targetUnit);
-
-    }
-
-    public class CommandData
-    {
-        public int OwnerPlayerID;
-        public int OwnerUnitID;
-        public int TargetPlayerID;
+        public int ActorUnitID;
         public int TargetUnitID;
+        public int ActorPlayerID;
+        public int TargetPlayerID;
 
-        public CommandData(int ownerPlayerId, int ownerUnitId, int targetPlayerId, int targetUnitId)
-        {
-            OwnerPlayerID = ownerPlayerId;
-            OwnerUnitID = ownerUnitId;
-            TargetPlayerID = targetPlayerId;
-            TargetUnitID = targetUnitId;
-        }
+        protected UnitController actorUnit;
+        protected UnitController targetUnit;
+
+        public abstract void Execute();
+
+        public abstract void Undo();
+
+        public abstract bool WillHitTarget();
+
+        public void SetActorUnit(UnitController actorUnit) => this.actorUnit = actorUnit;
+
+        public void SetTargetUnit(UnitController targetUnit) => this.targetUnit = targetUnit;
+
     }
 }
