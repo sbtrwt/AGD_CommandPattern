@@ -15,7 +15,7 @@ MonoBehaviour:
   PlayerID: 2
   UnitData:
   - {fileID: 11400000, guid: 27e090985b1ec384fb5e16932842937d, type: 2}
-  - {fileID: 11400000, guid: 27e090985b1ec384fb5e16932842937d, type: 2}
+  - {fileID: 11400000, guid: cb827b86d0beb0443ac815f2af6091db, type: 2}
   UnitPositions:
   - {x: 5, y: 2, z: 0}
   - {x: 5, y: 0, z: 0}
