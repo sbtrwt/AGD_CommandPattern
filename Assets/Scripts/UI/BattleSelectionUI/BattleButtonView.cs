@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Command.Main;
 using TMPro;
 
 namespace Command.UI

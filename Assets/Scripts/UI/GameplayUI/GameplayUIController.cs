@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Command.UI
 {
     public class GameplayUIController : IUIController
@@ -12,6 +8,6 @@ namespace Command.UI
 
         public void Show() => gameplayView.EnableView();
 
-        public void SetBackgroundImage(Sprite spriteToSet) => gameplayView.SetBeckground(spriteToSet);
+        public void SetTurnNumber(int turnNumber) => gameplayView.SetTurnText($"Turn: {turnNumber}");
     }
 }
