@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using Command.Player;
 using UnityEngine;
 
-public class HealAction : MonoBehaviour
+namespace Command.Action
 {
-    // Start is called before the first frame update
-    void Start()
+    public class HealAction : IAction
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
+        {
+            Debug.Log($"Heal Action is performed.");
+        }
     }
 }
