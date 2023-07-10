@@ -1,48 +1,32 @@
 using UnityEngine;
-using Command.Player;
+using Command.Main;
 
 namespace Command.Commands
 {
-    public class HealCommand : IUnitCommand
+    public class HealCommand : UnitCommand
     {
-        private CommandData commandData;
-        private PlayerController ownerPlayer;
-        private UnitController ownerUnit;
-        private UnitController targetUnit;
+        private bool willHitTarget;
 
-        public int OwnerPlayerID => commandData.OwnerPlayerID;
-        public int OwnerUnitID => commandData.OwnerUnitID;
-        public int TargetPlayerID => commandData.TargetPlayerID;
-        public int TargetUnitID => commandData.TargetUnitID;
-
-        public HealCommand(CommandData commandData)
+        public HealCommand(int actorUnitId, int targetUnitId, int actorPlayerId, int targetPlayerId)
         {
-            this.commandData = commandData;
+            ActorUnitID = actorUnitId;
+            TargetUnitID = targetUnitId;
+            ActorPlayerID = actorPlayerId;
+            TargetPlayerID = targetPlayerId;
+
+            willHitTarget = WillHitTarget();
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            throw new System.NotImplementedException();
+            GameService.Instance.ActionService.GetActionByType(CommandType.Heal).PerformAction(actorUnit, targetUnit, willHitTarget);
         }
 
-        public void Undo()
+        public override void Undo()
         {
             throw new System.NotImplementedException();
         }
 
-        public void SetPlayer(PlayerController playerToSet)
-        {
-            ownerPlayer = playerToSet;
-        }
-
-        public void SetActorUnit(UnitController ownerUnit)
-        {
-            this.ownerUnit = ownerUnit;
-        }
-
-        public void SetTargetUnit(UnitController targetUnit)
-        {
-            this.targetUnit = targetUnit;
-        }
+        public override bool WillHitTarget() => true;
     }
 }
