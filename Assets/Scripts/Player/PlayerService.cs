@@ -54,27 +54,30 @@ namespace Command.Player
 
         public void OnPlayerTurnCompleted() => StartNextTurn();
 
-
-
-        // After Initialization is Done: 
-
-        public void ProcessUnitCommand(IUnitCommand commandToProcess)
+        public void ProcessUnitCommand(UnitCommand commandToProcess)
         {
-            SetTargetUnit(commandToProcess);
-
-            if(commandToProcess.OwnerPlayerID == player1.PlayerID)
-                player1.ProcessUnitCommand(commandToProcess);
-            else if(commandToProcess.OwnerPlayerID == player2.PlayerID)
-                player2.ProcessUnitCommand(commandToProcess);
+            SetUnitReferences(commandToProcess);
+            GetPlayerById(commandToProcess.ActorPlayerID).ProcessUnitCommand(commandToProcess);
         }
 
-        private void SetTargetUnit(IUnitCommand commandToProcess)
+        private void SetUnitReferences(UnitCommand commandToProcess)
         {
-            if(player1.PlayerID == commandToProcess.TargetPlayerID)
-                commandToProcess.SetTargetUnit(player1.GetUnitByID(commandToProcess.TargetUnitID));
-            else if(player2.PlayerID == commandToProcess.TargetPlayerID)
-                commandToProcess.SetTargetUnit(player2.GetUnitByID(commandToProcess.TargetUnitID));
+            var actorUnit = GetPlayerById(commandToProcess.ActorPlayerID).GetUnitByID(commandToProcess.ActorUnitID);
+            var targetUnit = GetPlayerById(commandToProcess.TargetPlayerID).GetUnitByID(commandToProcess.TargetUnitID);
+            commandToProcess.SetActorUnit(actorUnit);
+            commandToProcess.SetTargetUnit(targetUnit);
         }
+
+        private PlayerController GetPlayerById(int playerId) 
+        {
+            if (player1.PlayerID == playerId)
+                return player1;
+            else if (player2.PlayerID == playerId)
+                return player2;
+            else
+                throw new System.Exception($"No Player found for the given Player ID: {playerId}");
+        }
+
 
     }
 }
