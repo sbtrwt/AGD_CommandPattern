@@ -12,6 +12,7 @@ namespace Command.Input
 
         private InputState currentState;
         private CommandType selectedCommandType;
+        private TargetType targetType;
 
         public InputService()
         {
@@ -26,13 +27,13 @@ namespace Command.Input
 
         public void UpdateInputService()
         {
-            switch(currentState)
+            switch (currentState)
             {
                 case InputState.SELECTING_ACTION:
 
                     break;
                 case InputState.SELECTING_TARGET:
-                    mouseInputHandler.HandleTargetSelection();
+                    mouseInputHandler.HandleTargetSelection(targetType);
                     break;
                 case InputState.EXECUTING_INPUT:
 
@@ -49,43 +50,47 @@ namespace Command.Input
             this.selectedCommandType = selectedCommandType;
             Debug.Log($"The Action Selected is {selectedCommandType}");
             SetInputState(InputState.SELECTING_TARGET);
+            SetTargetType(selectedCommandType);
         }
 
-
-        // TODO After Target Selection is done.
-
+        private void SetTargetType(CommandType selectedCommandType)
+        {
+            if (selectedCommandType == CommandType.Heal)
+                targetType = TargetType.Friendly;
+            else
+                targetType = TargetType.Enemy;
+        }
 
         public void OnTargetSelected(UnitController targetUnit)
         {
-            /*  TODO:
-             *  Create a new command for the selected command type.
-             *  Push this newly created Unit Action Command down the stream through the GameService.
-             */
+            SetInputState(InputState.EXECUTING_INPUT);
+            UnitCommand commandToProcess = CreateUnitCommand(targetUnit);
+            GameService.Instance.ProcessUnitCommand(commandToProcess);
+        }
 
-            /*CommandData commandData = GetCommandData(targetUnit);
-            IUnitCommand commandToProcess;
-
+        private UnitCommand CreateUnitCommand(UnitController targetUnit)
+        {
             switch (selectedCommandType)
             {
                 case CommandType.Attack:
-                    commandToProcess = new AttackCommand(commandData);
-                    break;
+                    return new AttackCommand(GameService.Instance.PlayerService.ActiveUnitID,
+                                             targetUnit.UnitID,
+                                             GameService.Instance.PlayerService.ActivePlayerID,
+                                             targetUnit.Owner.PlayerID);
                 case CommandType.Heal:
-                    commandToProcess = new HealCommand(commandData);
-                    break;
+                    return new HealCommand(GameService.Instance.PlayerService.ActiveUnitID,
+                                           targetUnit.UnitID,
+                                           GameService.Instance.PlayerService.ActivePlayerID,
+                                           targetUnit.Owner.PlayerID);
                 default:
                     throw new System.Exception($"No Command found of type: {selectedCommandType}");
             }
-
-            GameService.Instance.ProcessUnitCommand(commandToProcess);*/
         }
+    }
 
-        private CommandData GetCommandData(UnitController targetUnit)
-        {
-            int playerID = GameService.Instance.PlayerService.ActivePlayerID;
-            int actorUnitId = GameService.Instance.PlayerService.ActiveUnitID;
-            return new CommandData(playerID, actorUnitId, targetUnit.Owner.PlayerID, targetUnit.UnitID);
-        }
-
+    public enum TargetType
+    {
+        Friendly,
+        Enemy
     }
 }
