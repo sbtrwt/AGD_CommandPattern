@@ -9,17 +9,15 @@ namespace Command.Player
     {
         private PlayerService playerService;
 
-        private int playerId;
+        public int PlayerID { get; private set; }
         private List<UnitController> units;
         private int activeUnitIndex;
-
-        public int PlayerID => playerId;
         public int ActiveUnitID => units[activeUnitIndex].UnitID;
 
         public PlayerController(PlayerService playerService, PlayerScriptableObject playerScriptableObject)
         {
             this.playerService = playerService;
-            playerId = playerScriptableObject.PlayerID;
+            PlayerID = playerScriptableObject.PlayerID;
             CreateUnits(playerScriptableObject.UnitData, playerScriptableObject.UnitPositions);
         }
 
@@ -65,16 +63,8 @@ namespace Command.Player
 
         private void EndPlayerTurn() => playerService.OnPlayerTurnCompleted();
 
-
-
-        // After Initialization is Done: 
-
         public UnitController GetUnitByID(int unitId) => units.Find(unit => unit.UnitID == unitId);
 
-        public void ProcessUnitCommand(IUnitCommand commandToProcess)
-        {
-            commandToProcess.SetPlayer(this);
-            GetUnitByID(commandToProcess.OwnerUnitID).ProcessUnitCommand(commandToProcess);
-        }
+        public void ProcessUnitCommand(UnitCommand commandToProcess) => GetUnitByID(commandToProcess.ActorUnitID).ProcessUnitCommand(commandToProcess);
     }
 }
