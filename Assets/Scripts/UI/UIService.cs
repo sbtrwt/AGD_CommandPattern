@@ -2,51 +2,73 @@ using System.Collections.Generic;
 using UnityEngine;
 using Command.Commands;
 using Command.Main;
+using Command.Input;
 
 namespace Command.UI
 {
     public class UIService : MonoBehaviour
     {
-        // Battle Selection UI:
+        [Header("Battle Selection UI:")]
         private BattleSelectionUIController battleSelectionController;
         [SerializeField] private BattleSelectionUIView battleSelectionView;
         [SerializeField] private BattleButtonView battleButtonPrefab;
 
-        // Gameplay UI:
+        [Header("Gameplay UI:")]
         private GameplayUIController gameplayController;
         [SerializeField] private GameplayUIView gameplayView;
 
+        [Header("Action Selection UI:")]
         private ActionSelectionUIController actionSelectionController;
         [SerializeField] private ActionSelectionUIView actionSelectionView;
         [SerializeField] private ActionButtonView actionButtonPrefab;
+
+        [Header("Battle End UI:")]
+        private BattleEndUIController battleEndController;
+        [SerializeField] private BattleEndUIView battleEndView;
 
         private void Start()
         {
             battleSelectionController = new BattleSelectionUIController(battleSelectionView, battleButtonPrefab);
             gameplayController = new GameplayUIController(gameplayView);
             actionSelectionController = new ActionSelectionUIController(actionSelectionView, actionButtonPrefab);
+            battleEndController = new BattleEndUIController(battleEndView);
         }
 
-        public void ShowBattleSelectionView(int battleCount) => battleSelectionController.Show(battleCount);
-
-        public void ShowGameplayView(Sprite backgroundImage)
+        public void Init(int battleCount)
         {
-            gameplayController.Show();
-            gameplayController.SetBackgroundImage(backgroundImage);
+            ShowBattleSelectionView(battleCount);
+            SubscribeToEvents();
         }
+
+        private void ShowBattleSelectionView(int battleCount) => battleSelectionController.Show(battleCount);
+
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnReplayButtonClicked.AddListener(HideBattleEndUI);
+
+        public void ShowGameplayView() => gameplayController.Show();
 
         public void ShowActionSelectionView(List<CommandType> executableActions)
         {
             switch(GameService.Instance.ReplayService.ReplayState)
             {
                 case Replay.ReplayState.ACTIVE:
-                    // Tell the Replay Service to execute the next unit action command in the queue.
+                    GameService.Instance.ReplayService.ExecuteNext();
                     break;
                 case Replay.ReplayState.DEACTIVE:
                     actionSelectionController.Show(executableActions);
+                    GameService.Instance.InputService.SetInputState(InputState.SELECTING_ACTION);
                     break;
             }
         }
+
+        public void ShowBattleEndUI(int winnerId)
+        {
+            battleEndController.SetWinner(winnerId);
+            battleEndController.Show();
+        }
+
+        public void HideBattleEndUI() => battleEndController.Hide();
+
+        public void UpdateTurnNumber(int turnNumber) => gameplayController.SetTurnNumber(turnNumber);
 
     }
 }
