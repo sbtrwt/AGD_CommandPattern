@@ -102,7 +102,11 @@ namespace Command.Player
             unitView.SetUnitIndicator(false);
         }
 
+        public void Revive() => SetAliveState(UnitAliveState.ALIVE);
+
         public void Destroy() => Object.Destroy(unitView.gameObject);
+
+        public void ResetUnitIndicator() => unitView.SetUnitIndicator(false);
 
     }
 
