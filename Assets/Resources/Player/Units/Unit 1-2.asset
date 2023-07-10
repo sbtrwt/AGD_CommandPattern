@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitID: 2
   UnitPrefab: {fileID: 7170176875333329667, guid: 5b91314a5c825a649a4600a0ce8a7370, type: 3}
-  MaxHealth: 20
+  MaxHealth: 10
   Power: 5
   executableCommands: 0000000001000000
