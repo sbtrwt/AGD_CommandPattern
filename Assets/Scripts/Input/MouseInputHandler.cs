@@ -1,7 +1,5 @@
 using Command.Main;
 using Command.Player;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Command.Input
@@ -64,9 +62,9 @@ namespace Command.Input
         private bool ValidateUnit(UnitView selectedUnit)
         {
             if (targetTypeToSelect == TargetType.Friendly)
-                return selectedUnit.Controller.Owner.PlayerID == GameService.Instance.PlayerService.ActivePlayerID;
+                return selectedUnit.Controller.Owner.PlayerID == GameService.Instance.PlayerService.ActivePlayerID && selectedUnit.Controller.IsAlive();
             else
-                return selectedUnit.Controller.Owner.PlayerID != GameService.Instance.PlayerService.ActivePlayerID;
+                return selectedUnit.Controller.Owner.PlayerID != GameService.Instance.PlayerService.ActivePlayerID && selectedUnit.Controller.IsAlive();
         }
     }
 }

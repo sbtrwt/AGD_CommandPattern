@@ -1,7 +1,6 @@
 using UnityEngine;
 using Command.Main;
 using Command.Commands;
-using Command.UI;
 using Command.Player;
 
 namespace Command.Input
