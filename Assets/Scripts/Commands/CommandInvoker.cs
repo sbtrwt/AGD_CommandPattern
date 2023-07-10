@@ -13,7 +13,6 @@ namespace Command.Commands
 
         public void ProcessCommand(ICommand commandToProcess)
         {
-            UpdateInputState();
             ExecuteCommand(commandToProcess);
             RegisterCommand(commandToProcess);
         }
@@ -22,25 +21,20 @@ namespace Command.Commands
 
         public void RegisterCommand(ICommand commandToRegister) => commandRegistry.Push(commandToRegister);
 
-        public void Undo() => commandRegistry.Pop().Undo();
-
+        public void Undo()
+        {
+            if(!RegistryEmpty() && CommandBelongsToActivePlayer())
+                commandRegistry.Pop().Undo();
+        }
 
         public void SetReplayStack()
         {
             GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
             commandRegistry.Clear();
         }
-        private void UpdateInputState()
-        {
-            if(GameService.Instance.ReplayService.ReplayState == Replay.ReplayState.ACTIVE)
-            {
-                // TODO : Inform Replay Service that a command is being processed right now.
-            }
-            else
-            {
-                GameService.Instance.InputService.SetInputState(Input.InputState.EXECUTING_INPUT);
-            }
 
-        }
+        private bool RegistryEmpty() => commandRegistry.Count == 0;
+
+        private bool CommandBelongsToActivePlayer() => (commandRegistry.Peek() as UnitCommand).ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
     }
 }

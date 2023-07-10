@@ -23,7 +23,11 @@ namespace Command.Commands
 
         public override void Undo()
         {
-            throw new System.NotImplementedException();
+            if (willHitTarget)
+            {
+                targetUnit.TakeDamage(actorUnit.Power);
+                actorUnit.Owner.ResetCurrentActivePlayer();
+            }
         }
 
         public override bool WillHitTarget() => true;
