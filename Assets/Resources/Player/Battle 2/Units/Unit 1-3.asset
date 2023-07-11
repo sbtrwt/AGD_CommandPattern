@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66518e3bb2dd340478171f97ec326357, type: 3}
   m_Name: Unit 1-3
   m_EditorClassIdentifier: 
-  UnitID: 0
-  UnitPrefab: {fileID: 0}
-  MaxHealth: 0
-  Power: 0
-  executableCommands: 
+  UnitID: 3
+  UnitPrefab: {fileID: 7170176875333329667, guid: 5b91314a5c825a649a4600a0ce8a7370, type: 3}
+  MaxHealth: 10
+  Power: 5
+  executableCommands: 0000000004000000
