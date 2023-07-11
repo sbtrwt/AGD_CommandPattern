@@ -2,23 +2,21 @@ using Command.Input;
 using Command.Player;
 using Command.Main;
 using UnityEngine;
+using Command.Commands;
 
 namespace Command.Actions
 {
     public class CleanseAction : IAction
     {
-        private const float hitChance = 0.2f;
         public TargetType TargetType  => TargetType.Enemy;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(ActionType.Cleanse);
-            if(IsSuccessful())
+            actorUnit.PlayActionAnimation(CommandType.Cleanse);
+            if(successful)
                 targetUnit.ResetStats();
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => Random.Range(0f, 1f) < hitChance;
     }
 }

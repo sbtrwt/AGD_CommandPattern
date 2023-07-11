@@ -1,3 +1,4 @@
+using Command.Commands;
 using Command.Input;
 using Command.Player;
 using UnityEngine;
@@ -6,13 +7,12 @@ namespace Command.Actions
 {
     public class BerserkAttackAction : IAction
     {
-        private const float hitChance = 0.66f;
         public TargetType TargetType => TargetType.Enemy;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(ActionType.BerserkAttack);
-            if (IsSuccessful())
+            actorUnit.PlayActionAnimation(CommandType.BerserkAttack);
+            if (successful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower * 2);
             else
             {
@@ -20,7 +20,5 @@ namespace Command.Actions
                 Debug.Log("actor unit must be hit now.");
             }
         }
-
-        public bool IsSuccessful() => Random.Range(0f, 1f) < hitChance;
     }
 }

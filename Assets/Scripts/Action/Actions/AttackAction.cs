@@ -1,3 +1,4 @@
+using Command.Commands;
 using Command.Input;
 using Command.Main;
 using Command.Player;
@@ -8,15 +9,13 @@ namespace Command.Actions
     {
         public TargetType TargetType => TargetType.Enemy;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(ActionType.Attack);
-            if (IsSuccessful())
+            actorUnit.PlayActionAnimation(CommandType.Attack);
+            if (successful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
     }
 }

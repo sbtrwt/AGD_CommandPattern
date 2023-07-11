@@ -1,3 +1,4 @@
+using Command.Commands;
 using Command.Input;
 using Command.Player;
 
@@ -7,13 +8,11 @@ namespace Command.Actions
     {
         public TargetType TargetType => TargetType.Friendly;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(ActionType.Heal);
-            if(IsSuccessful())
+            actorUnit.PlayActionAnimation(CommandType.Heal);
+            if(successful)
                 targetUnit.RestoreHealth(actorUnit.CurrentPower);
         }
-
-        public bool IsSuccessful() => true;
     }
 }

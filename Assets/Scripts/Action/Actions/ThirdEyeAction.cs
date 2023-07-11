@@ -1,3 +1,4 @@
+using Command.Commands;
 using Command.Input;
 using Command.Main;
 using Command.Player;
@@ -8,10 +9,10 @@ namespace Command.Actions
     {
         public TargetType TargetType => TargetType.Self;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(ActionType.BerserkAttack);
-            if (IsSuccessful())
+            actorUnit.PlayActionAnimation(CommandType.BerserkAttack);
+            if (successful)
             {
                 int healthToConvert = (int)(targetUnit.CurrentHealth * 0.25f);
                 targetUnit.TakeDamage(healthToConvert);
@@ -20,7 +21,5 @@ namespace Command.Actions
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
     }
 }

@@ -1,3 +1,4 @@
+using Command.Commands;
 using Command.Input;
 using Command.Main;
 using Command.Player;
@@ -8,10 +9,10 @@ namespace Command.Actions
     {
         public TargetType TargetType => TargetType.Self;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(ActionType.Meditate);
-            if(IsSuccessful())
+            actorUnit.PlayActionAnimation(CommandType.Meditate);
+            if(successful)
             {
                 var healthToIncrease = (int)(targetUnit.CurrentMaxHealth * 0.2f);
                 targetUnit.CurrentMaxHealth += healthToIncrease;
@@ -20,7 +21,5 @@ namespace Command.Actions
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
     }
 }

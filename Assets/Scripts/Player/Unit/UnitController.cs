@@ -1,6 +1,6 @@
 using UnityEngine;
 using Command.Main;
-using Command.Actions;
+using Command.Commands;
 
 namespace Command.Player
 {
@@ -85,7 +85,7 @@ namespace Command.Player
             // Play Death Animation.
         }
 
-        public void PlayActionAnimation(ActionType actionType)
+        public void PlayActionAnimation(CommandType actionType)
         {
             if (actionType == unitScriptableObject.executableCommands[0])
                 unitView.PlayAnimation(UnitAnimations.ACTION1);
@@ -109,6 +109,8 @@ namespace Command.Player
         public void Destroy() => Object.Destroy(unitView.gameObject);
 
         public void ResetUnitIndicator() => unitView.SetUnitIndicator(false);
+
+        public void ProcessUnitCommand(UnitCommand commandToProcess) => GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
 
     }
 
