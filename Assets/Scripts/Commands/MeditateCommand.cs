@@ -37,6 +37,6 @@ namespace Command.Commands
             }
         }
 
-        public override bool WillHitTarget() => Random.Range(0f, 1f) > hitChance;
+        public override bool WillHitTarget() => Random.Range(0f, 1f) < hitChance;
     }
 }

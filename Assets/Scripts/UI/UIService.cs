@@ -70,5 +70,7 @@ namespace Command.UI
 
         public void UpdateTurnNumber(int turnNumber) => gameplayController.SetTurnNumber(turnNumber);
 
+        public void ActionMissed() => gameplayController.ShowMissedAction();
+
     }
 }

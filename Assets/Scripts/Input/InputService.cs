@@ -33,7 +33,6 @@ namespace Command.Input
         public void OnActionSelected(CommandType selectedCommandType)
         {
             this.selectedCommandType = selectedCommandType;
-            Debug.Log($"The Action Selected is {selectedCommandType}");
             SetInputState(InputState.SELECTING_TARGET);
             SetTargetType(selectedCommandType);
         }

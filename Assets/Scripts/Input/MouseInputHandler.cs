@@ -28,10 +28,7 @@ namespace Command.Input
         {
             Vector3 mouseWorldPosition = GetMouseWorldPosition();
             if(IsTargetSelected(mouseWorldPosition, out UnitView selectedUnit))
-            {
-                Debug.Log($"Will highlight selected target", selectedUnit);
                 inputService.OnTargetSelected(selectedUnit.Controller);
-            }
         }
 
         private Vector3 GetMouseWorldPosition()

@@ -7,7 +7,7 @@ namespace Command.Commands
 {
     public class CleanseCommand : UnitCommand
     {
-        private const float hitChance = 0.2f;
+        private const float hitChance = 0.15f;
         private bool willHitTarget;
         private int previousPower;
 
@@ -33,6 +33,6 @@ namespace Command.Commands
                 targetUnit.CurrentPower = previousPower;
         }
 
-        public override bool WillHitTarget() => Random.Range(0f, 1f) > hitChance;
+        public override bool WillHitTarget() => Random.Range(0f, 1f) < hitChance;
     }
 }

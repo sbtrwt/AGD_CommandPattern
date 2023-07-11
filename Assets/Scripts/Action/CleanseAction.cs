@@ -1,6 +1,7 @@
 using Command.Input;
 using Command.Player;
 using Command.Commands;
+using Command.Main;
 
 namespace Command.Actions
 {
@@ -13,6 +14,8 @@ namespace Command.Actions
             actorUnit.PlayActionAnimation(CommandType.Cleanse);
             if (successful)
                 targetUnit.ResetStats();
+            else
+                GameService.Instance.UIService.ActionMissed();
         }
     }
 }

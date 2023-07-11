@@ -99,7 +99,6 @@ namespace Command.Player
 
         public void OnActionExecuted()
         {
-            Debug.Log("An Action has been executed.");
             SetUsedState(UnitUsedState.USED);
             Owner.OnUnitTurnEnded();
             unitView.SetUnitIndicator(false);

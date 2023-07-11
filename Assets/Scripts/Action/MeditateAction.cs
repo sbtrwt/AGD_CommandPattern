@@ -1,5 +1,6 @@
 using Command.Commands;
 using Command.Input;
+using Command.Main;
 using Command.Player;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace Command.Actions
                 targetUnit.CurrentMaxHealth += healthToIncrease;
                 targetUnit.RestoreHealth(healthToIncrease);
             }
+            else
+                GameService.Instance.UIService.ActionMissed();
         }
     }
 }
