@@ -9,10 +9,7 @@ namespace Command.Input
         private InputService inputService;
         private TargetType targetTypeToSelect;
 
-        public MouseInputHandler(InputService inputService)
-        {
-            this.inputService = inputService;
-        }
+        public MouseInputHandler(InputService inputService) => this.inputService = inputService;
 
         public void HandleTargetSelection(TargetType targetTypeToSelect)
         {
@@ -45,9 +42,7 @@ namespace Command.Input
             {
                 selectedUnit = collider.GetComponent<UnitView>();
                 if(ValidateUnit(selectedUnit))
-                {
                     return true;
-                }
             }
 
             selectedUnit = null;

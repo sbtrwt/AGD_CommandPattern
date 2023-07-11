@@ -19,13 +19,7 @@ namespace Command.Battle
             backgroundImage.gameObject.SetActive(false);
         }
 
-        private void SubscribeToEvents()
-        {
-            GameService.Instance.EventService.OnBattleSelected.AddListener(LoadBattle);
-            GameService.Instance.EventService.OnReplayButtonClicked.AddListener(ReplayBattle);
-        }
-
-        private void ReplayBattle() => LoadBattle(currentBattleId);
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnBattleSelected.AddListener(LoadBattle);
 
         private void LoadBattle(int battleId)
         {

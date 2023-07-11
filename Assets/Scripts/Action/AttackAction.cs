@@ -1,5 +1,5 @@
-using Command.Commands;
 using Command.Input;
+using Command.Main;
 using Command.Player;
 
 namespace Command.Actions
@@ -8,11 +8,15 @@ namespace Command.Actions
     {
         public TargetType TargetType => TargetType.Enemy;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
         {
-            actorUnit.PlayActionAnimation(CommandType.Attack);
-            if (successful)
+            actorUnit.PlayActionAnimation(ActionType.Attack);
+            if (IsSuccessful())
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
+            else
+                GameService.Instance.UIService.ActionMissed();
         }
+
+        public bool IsSuccessful() => true;
     }
 }

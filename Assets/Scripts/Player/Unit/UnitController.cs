@@ -1,6 +1,6 @@
 using UnityEngine;
 using Command.Main;
-using Command.Commands;
+using Command.Actions;
 
 namespace Command.Player
 {
@@ -56,8 +56,6 @@ namespace Command.Player
 
         public bool IsAlive() => aliveState == UnitAliveState.ALIVE;
 
-        public void ProcessUnitCommand(UnitCommand commandToProcess) => GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
-
         public void TakeDamage(int damageToTake)
         {
             CurrentHealth -= damageToTake;
@@ -87,7 +85,7 @@ namespace Command.Player
             // Play Death Animation.
         }
 
-        public void PlayActionAnimation(CommandType actionType)
+        public void PlayActionAnimation(ActionType actionType)
         {
             if (actionType == unitScriptableObject.executableCommands[0])
                 unitView.PlayAnimation(UnitAnimations.ACTION1);

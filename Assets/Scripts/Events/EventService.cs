@@ -1,4 +1,4 @@
-using Command.Commands;
+using Command.Actions;
 
 /**  This script demonstrates implementation of the Observer Pattern.
 *  If you're interested in learning about Observer Pattern, 
@@ -11,14 +11,12 @@ namespace Command.Events
     public class EventService
     {
         public GameEventController<int> OnBattleSelected { get; private set; }
-        public GameEventController<CommandType> OnActionSelected { get; private set; }
-        public GameEventController OnReplayButtonClicked { get; private set; }
+        public GameEventController<ActionType> OnActionSelected { get; private set; }
 
         public EventService()
         {
             OnBattleSelected = new GameEventController<int>();
-            OnActionSelected = new GameEventController<CommandType>();
-            OnReplayButtonClicked = new GameEventController();
+            OnActionSelected = new GameEventController<ActionType>();
         }
     }
 }

@@ -1,6 +1,6 @@
+using Command.Actions;
 using System.Collections.Generic;
 using UnityEngine;
-using Command.Commands;
 
 namespace Command.Player
 {
@@ -11,6 +11,6 @@ namespace Command.Player
         public UnitView UnitPrefab;
         public int MaxHealth;
         public int Power;
-        public List<CommandType> executableCommands;
+        public List<ActionType> executableCommands;
     }
 }

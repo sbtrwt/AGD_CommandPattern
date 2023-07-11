@@ -1,7 +1,6 @@
-using UnityEngine;
 using Command.Main;
-using Command.Commands;
 using Command.Player;
+using Command.Actions;
 
 namespace Command.Input
 {
@@ -10,7 +9,7 @@ namespace Command.Input
         private MouseInputHandler mouseInputHandler;
 
         private InputState currentState;
-        private CommandType selectedCommandType;
+        private ActionType selectedActionType;
         private TargetType targetType;
 
         public InputService()
@@ -30,54 +29,19 @@ namespace Command.Input
                 mouseInputHandler.HandleTargetSelection(targetType);
         }
 
-        public void OnActionSelected(CommandType selectedCommandType)
+        public void OnActionSelected(ActionType selectedActionType)
         {
-            this.selectedCommandType = selectedCommandType;
+            this.selectedActionType = selectedActionType;
             SetInputState(InputState.SELECTING_TARGET);
-            SetTargetType(selectedCommandType);
+            SetTargetType(selectedActionType);
         }
 
-        private void SetTargetType(CommandType selectedCommandType) => targetType = GameService.Instance.ActionService.GetTargetTypeForAction(selectedCommandType);
+        private void SetTargetType(ActionType selectedActionType) => targetType = GameService.Instance.ActionService.GetTargetTypeForAction(selectedActionType);
 
         public void OnTargetSelected(UnitController targetUnit)
         {
             SetInputState(InputState.EXECUTING_INPUT);
-            UnitCommand commandToProcess = CreateUnitCommand(targetUnit);
-            GameService.Instance.ProcessUnitCommand(commandToProcess);
-        }
-
-        private UnitCommand CreateUnitCommand(UnitController targetUnit)
-        {
-            switch (selectedCommandType)
-            {
-                case CommandType.Attack:
-                    return new AttackCommand(GameService.Instance.PlayerService.ActiveUnitID,
-                                             targetUnit.UnitID,
-                                             GameService.Instance.PlayerService.ActivePlayerID,
-                                             targetUnit.Owner.PlayerID);
-                case CommandType.Heal:
-                    return new HealCommand(GameService.Instance.PlayerService.ActiveUnitID,
-                                           targetUnit.UnitID,
-                                           GameService.Instance.PlayerService.ActivePlayerID,
-                                           targetUnit.Owner.PlayerID);
-                case CommandType.AttackStance:
-                    return new AttackStanceCommand(GameService.Instance.PlayerService.ActiveUnitID,
-                                                   targetUnit.UnitID,
-                                                   GameService.Instance.PlayerService.ActivePlayerID,
-                                                   targetUnit.Owner.PlayerID);
-                case CommandType.Cleanse:
-                    return new CleanseCommand(GameService.Instance.PlayerService.ActiveUnitID,
-                                              targetUnit.UnitID,
-                                              GameService.Instance.PlayerService.ActivePlayerID,
-                                              targetUnit.Owner.PlayerID);
-                case CommandType.Meditate:
-                    return new MeditateCommand(GameService.Instance.PlayerService.ActiveUnitID,
-                                               targetUnit.UnitID,
-                                               GameService.Instance.PlayerService.ActivePlayerID,
-                                               targetUnit.Owner.PlayerID);
-                default:
-                    throw new System.Exception($"No Command found of type: {selectedCommandType}");
-            }
+            GameService.Instance.PlayerService.PerformAction(selectedActionType, targetUnit);
         }
     }
 

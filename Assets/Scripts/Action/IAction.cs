@@ -7,6 +7,8 @@ namespace Command.Actions
     {
         public TargetType TargetType { get; }
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful);
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit);
+
+        public bool IsSuccessful();
     } 
 }

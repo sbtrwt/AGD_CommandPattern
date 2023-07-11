@@ -1,7 +1,6 @@
-namespace Command.Commands
+namespace Command.Actions
 {
-    [System.Serializable]
-    public enum CommandType
+    public enum ActionType
     {
         Attack,
         Heal,

@@ -1,4 +1,4 @@
-using Command.Commands;
+using Command.Actions;
 using Command.Main;
 
 namespace Command.Player
@@ -65,29 +65,7 @@ namespace Command.Player
 
         public void OnPlayerTurnCompleted() => StartNextTurn();
 
-        public void ProcessUnitCommand(UnitCommand commandToProcess)
-        {
-            SetUnitReferences(commandToProcess);
-            GetPlayerById(commandToProcess.ActorPlayerID).ProcessUnitCommand(commandToProcess);
-        }
-
-        private void SetUnitReferences(UnitCommand commandToProcess)
-        {
-            var actorUnit = GetPlayerById(commandToProcess.ActorPlayerID).GetUnitByID(commandToProcess.ActorUnitID);
-            var targetUnit = GetPlayerById(commandToProcess.TargetPlayerID).GetUnitByID(commandToProcess.TargetUnitID);
-            commandToProcess.SetActorUnit(actorUnit);
-            commandToProcess.SetTargetUnit(targetUnit);
-        }
-
-        private PlayerController GetPlayerById(int playerId) 
-        {
-            if (player1.PlayerID == playerId)
-                return player1;
-            else if (player2.PlayerID == playerId)
-                return player2;
-            else
-                throw new System.Exception($"No Player found for the given Player ID: {playerId}");
-        }
+        public void PerformAction(ActionType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit);
 
         public void PlayerDied(PlayerController deadPlayer)
         {
@@ -101,5 +79,14 @@ namespace Command.Player
             GameService.Instance.UIService.ShowBattleEndUI(winnerId);
         }
 
+        private PlayerController GetPlayerById(int playerId) 
+        {
+            if (player1.PlayerID == playerId)
+                return player1;
+            else if (player2.PlayerID == playerId)
+                return player2;
+            else
+                throw new System.Exception($"No Player found for the given Player ID: {playerId}");
+        }
     }
 }
