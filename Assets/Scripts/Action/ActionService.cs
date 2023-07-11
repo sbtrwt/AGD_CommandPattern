@@ -16,6 +16,8 @@ namespace Command.Actions
             actions.Add(CommandType.Attack, new AttackAction());
             actions.Add(CommandType.Heal, new HealAction());
             actions.Add(CommandType.AttackStance, new AttackStanceAction());
+            actions.Add(CommandType.Cleanse, new CleanseAction());
+            actions.Add(CommandType.Meditate, new MeditateAction());
         }
 
         public IAction GetActionByType(CommandType type)

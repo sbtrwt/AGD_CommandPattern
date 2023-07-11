@@ -5,6 +5,8 @@ namespace Command.Commands
     {
         Attack,
         Heal,
-        AttackStance
+        AttackStance,
+        Cleanse,
+        Meditate
     }
 }

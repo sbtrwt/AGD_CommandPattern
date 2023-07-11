@@ -26,22 +26,8 @@ namespace Command.Input
 
         public void UpdateInputService()
         {
-            switch (currentState)
-            {
-                case InputState.SELECTING_ACTION:
-
-                    break;
-                case InputState.SELECTING_TARGET:
-                    mouseInputHandler.HandleTargetSelection(targetType);
-                    break;
-                case InputState.EXECUTING_INPUT:
-
-                    break;
-                case InputState.INACTIVE:
-
-                    break;
-            }
-
+            if(currentState == InputState.SELECTING_TARGET)
+                mouseInputHandler.HandleTargetSelection(targetType);
         }
 
         public void OnActionSelected(CommandType selectedCommandType)
@@ -75,6 +61,21 @@ namespace Command.Input
                                            targetUnit.UnitID,
                                            GameService.Instance.PlayerService.ActivePlayerID,
                                            targetUnit.Owner.PlayerID);
+                case CommandType.AttackStance:
+                    return new AttackStanceCommand(GameService.Instance.PlayerService.ActiveUnitID,
+                                                   targetUnit.UnitID,
+                                                   GameService.Instance.PlayerService.ActivePlayerID,
+                                                   targetUnit.Owner.PlayerID);
+                case CommandType.Cleanse:
+                    return new CleanseCommand(GameService.Instance.PlayerService.ActiveUnitID,
+                                              targetUnit.UnitID,
+                                              GameService.Instance.PlayerService.ActivePlayerID,
+                                              targetUnit.Owner.PlayerID);
+                case CommandType.Meditate:
+                    return new MeditateCommand(GameService.Instance.PlayerService.ActiveUnitID,
+                                               targetUnit.UnitID,
+                                               GameService.Instance.PlayerService.ActivePlayerID,
+                                               targetUnit.Owner.PlayerID);
                 default:
                     throw new System.Exception($"No Command found of type: {selectedCommandType}");
             }

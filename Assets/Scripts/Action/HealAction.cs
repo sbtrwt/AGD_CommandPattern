@@ -6,7 +6,7 @@ namespace Command.Actions
 {
     public class HealAction : IAction
     {
-        TargetType IAction.TargetType { get => TargetType.Friendly; }
+        public TargetType TargetType => TargetType.Friendly;
 
         public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {

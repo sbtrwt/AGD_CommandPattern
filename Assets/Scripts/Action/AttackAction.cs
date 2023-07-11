@@ -6,7 +6,7 @@ namespace Command.Actions
 {
     public class AttackAction : IAction
     {
-        TargetType IAction.TargetType { get => TargetType.Enemy; }
+        public TargetType TargetType => TargetType.Enemy;
 
         public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {

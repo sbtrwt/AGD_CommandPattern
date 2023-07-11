@@ -12,8 +12,9 @@ namespace Command.Player
 
         public int UnitID { get; private set; }
         private UnitAliveState aliveState;
-        private int currentHealth;
         public int CurrentPower;
+        public int CurrentMaxHealth;
+        public int CurrentHealth { get; private set; }
         public UnitUsedState UsedState { get; private set; }
 
         public UnitController(PlayerController owner, UnitScriptableObject unitScriptableObject, Vector3 unitPosition)
@@ -36,7 +37,8 @@ namespace Command.Player
 
         private void InitializeVariables()
         {
-            currentHealth = unitScriptableObject.MaxHealth;
+            CurrentMaxHealth = unitScriptableObject.MaxHealth;
+            CurrentHealth = CurrentMaxHealth;
             CurrentPower = unitScriptableObject.Power;
             SetAliveState(UnitAliveState.ALIVE);
             SetUsedState(UnitUsedState.NOT_USED);
@@ -58,11 +60,11 @@ namespace Command.Player
 
         public void TakeDamage(int damageToTake)
         {
-            currentHealth -= damageToTake;
+            CurrentHealth -= damageToTake;
 
-            if (currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
-                currentHealth = 0;
+                CurrentHealth = 0;
                 UnitDied();
             }
             else
@@ -70,13 +72,13 @@ namespace Command.Player
                 // Play Hit Animation ???
             }
 
-            unitView.UpdateHealthBar((float) currentHealth / unitScriptableObject.MaxHealth);
+            unitView.UpdateHealthBar((float) CurrentHealth / CurrentMaxHealth);
         }
 
         public void RestoreHealth(int healthToRestore)
         {
-            currentHealth = currentHealth + healthToRestore > unitScriptableObject.MaxHealth ? unitScriptableObject.MaxHealth : currentHealth + healthToRestore;
-            unitView.UpdateHealthBar((float)currentHealth / unitScriptableObject.MaxHealth);
+            CurrentHealth = CurrentHealth + healthToRestore > CurrentMaxHealth ? CurrentMaxHealth : CurrentHealth + healthToRestore;
+            unitView.UpdateHealthBar((float)CurrentHealth / CurrentMaxHealth);
         }
 
         private void UnitDied()
@@ -102,6 +104,8 @@ namespace Command.Player
             Owner.OnUnitTurnEnded();
             unitView.SetUnitIndicator(false);
         }
+
+        public void ResetStats() => CurrentPower = unitScriptableObject.Power;
 
         public void Revive() => SetAliveState(UnitAliveState.ALIVE);
 
