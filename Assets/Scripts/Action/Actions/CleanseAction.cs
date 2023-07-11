@@ -19,6 +19,6 @@ namespace Command.Actions
                 GameService.Instance.UIService.ActionMissed();
         }
 
-        public bool IsSuccessful() => Random.Range(0, 1) < hitChance;
+        public bool IsSuccessful() => Random.Range(0f, 1f) < hitChance;
     }
 }

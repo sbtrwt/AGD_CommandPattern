@@ -17,6 +17,8 @@ namespace Command.Actions
             actions.Add(ActionType.AttackStance, new AttackStanceAction());
             actions.Add(ActionType.Cleanse, new CleanseAction());
             actions.Add(ActionType.Meditate, new MeditateAction());
+            actions.Add(ActionType.BerserkAttack, new BerserkAttackAction());
+            actions.Add(ActionType.ThirdEye, new ThirdEyeAction());
         }
 
         public IAction GetActionByType(ActionType type)

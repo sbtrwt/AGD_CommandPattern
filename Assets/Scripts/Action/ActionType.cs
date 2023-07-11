@@ -6,6 +6,8 @@ namespace Command.Actions
         Heal,
         AttackStance,
         Cleanse,
-        Meditate
+        Meditate,
+        BerserkAttack,
+        ThirdEye
     }
 }
