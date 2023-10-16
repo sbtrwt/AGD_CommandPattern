@@ -44,11 +44,4 @@ namespace Command.Input
             GameService.Instance.PlayerService.PerformAction(selectedActionType, targetUnit);
         }
     }
-
-    public enum TargetType
-    {
-        Friendly,
-        Enemy,
-        Self
-    }
 }
