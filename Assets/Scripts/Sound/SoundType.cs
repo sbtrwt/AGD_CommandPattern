@@ -4,8 +4,8 @@ namespace Command.Sound
     public enum SoundType
     {
         BACKGROUND_MUSIC,
-        SOUND_TYPE_1,
-        SOUND_TYPE_2,
-        SOUND_TYPE_3
+        SWORD_ATTACK,
+        HEAL_MAGIC,
+        UNIT_DEATH
     }
 }
