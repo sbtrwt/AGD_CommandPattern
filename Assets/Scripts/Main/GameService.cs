@@ -12,6 +12,13 @@ using UnityEngine.UI;
 
 namespace Command.Main
 {
+
+    /**  This script demonstrates implementation of the Service Locator Pattern.
+    *  If you're interested in learning about Service Locator Pattern, 
+    *  you can find a dedicated course on Outscal's website.
+    *  Link: https://outscal.com/courses
+    **/
+
     public class GameService : GenericMonoSingleton<GameService>
     {
         // Services:
