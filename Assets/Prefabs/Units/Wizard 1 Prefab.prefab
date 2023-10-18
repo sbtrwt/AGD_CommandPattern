@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 7170176875333329667}
   - component: {fileID: 2800171970663278155}
   m_Layer: 0
-  m_Name: Unit 1 Prefab
+  m_Name: Wizard 1 Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
