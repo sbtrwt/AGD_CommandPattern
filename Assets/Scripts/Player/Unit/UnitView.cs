@@ -21,7 +21,7 @@ namespace Command.Player
             PlayAnimation(UnitAnimations.IDLE);
         }
 
-        public void PlayAnimation(UnitAnimations animationToPlay, float delayTime = 0)
+        public void PlayAnimation(UnitAnimations animationToPlay)
         {
             unitAnimator.Play(animationToPlay.ToString(), 0);
         }
