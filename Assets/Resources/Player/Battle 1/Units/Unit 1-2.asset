@@ -17,3 +17,5 @@ MonoBehaviour:
   MaxHealth: 10
   Power: 5
   executableCommands: 0000000001000000
+  EnemyBattlePositionOffset: {x: 5, y: 0, z: 0}
+  MovementSpeed: 20
