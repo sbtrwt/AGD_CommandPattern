@@ -20,4 +20,4 @@ MonoBehaviour:
   UnitPositions:
   - {x: -6, y: 1.2, z: 0}
   - {x: -4, y: 0, z: 0}
-  - {x: -6, y: -1.2, z: 0}
+  - {x: -6, y: -2, z: 0}

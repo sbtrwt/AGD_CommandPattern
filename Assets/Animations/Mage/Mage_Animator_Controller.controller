@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a9c5fdfb2f0eef144945cf25d936941a, type: 2}
+  m_Motion: {fileID: 7400000, guid: a3a7645ffc9499840abf5655e0e11144, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -82,7 +82,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5d07dba6aad9af442acc573e576cc491, type: 2}
+  m_Motion: {fileID: 7400000, guid: 096f021e9f691384c9abccacc75c4249, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -109,7 +109,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3630673943ed04942b72ea40692887d6, type: 2}
+  m_Motion: {fileID: 7400000, guid: b6c5bb9254ebd494fa0aa4a5ddad6f0a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -121,7 +121,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Berserker_Animator_Controller
+  m_Name: Mage_Animator_Controller
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -179,7 +179,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1cf50dab7656bea40adadc53ddbb3d93, type: 2}
+  m_Motion: {fileID: 7400000, guid: 46115f0c24158874badd80b8a8fe298d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -249,7 +249,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8694a54871da27e428c8373e537fc9c0, type: 2}
+  m_Motion: {fileID: 7400000, guid: f541351045e06ee40b13ca118b218d85, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
