@@ -1,5 +1,6 @@
 using Command.Input;
 using Command.Player;
+using UnityEngine;
 
 namespace Command.Actions
 {
@@ -13,5 +14,7 @@ namespace Command.Actions
         public void PerformAction(UnitController actorUnit, UnitController targetUnit);
 
         public bool IsSuccessful();
+
+        public Vector3 CalculateMovePosition(UnitController targetUnit);
     } 
 }
