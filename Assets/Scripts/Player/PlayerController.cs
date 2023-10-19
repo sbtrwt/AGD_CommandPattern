@@ -48,6 +48,8 @@ namespace Command.Player
         {
             if(AllUnitsUsed())
             {
+                // TODO:    Need to check here if any of the players are dead. Not only the active one.
+
                 if (AllUnitsDead())
                     playerService.PlayerDied(this);
                 else 
@@ -55,6 +57,8 @@ namespace Command.Player
             }
             else
             {
+                playerService.CheckGameOver();
+
                 activeUnitIndex++;
                 TryStaringUnitTurn();
             }
@@ -66,7 +70,7 @@ namespace Command.Player
 
         private bool AllUnitsUsed() => units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED || !unit.IsAlive());
 
-        private bool AllUnitsDead() => units.TrueForAll(unit => !unit.IsAlive());
+        public bool AllUnitsDead() => units.TrueForAll(unit => !unit.IsAlive());
 
         private void EndPlayerTurn() => playerService.OnPlayerTurnCompleted();
 
@@ -78,6 +82,7 @@ namespace Command.Player
             units.Clear();
         }
 
+        // TODO:    What is this??
         public void ResetCurrentActivePlayer()
         {
             units[activeUnitIndex].ResetUnitIndicator();
