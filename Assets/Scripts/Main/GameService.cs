@@ -51,10 +51,10 @@ namespace Command.Main
             EventService = new EventService();
             ActionService = new ActionService();
             InputService = new InputService();
+            CommandInvoker = new CommandInvoker();
             BattleService = new BattleService(battleScriptableObjects, backgroundImage);
             PlayerService = new PlayerService();
             uiService.Init(battleScriptableObjects.Count);
-            CommandInvoker = new CommandInvoker();
             ReplayService = new ReplayService();
         }
 

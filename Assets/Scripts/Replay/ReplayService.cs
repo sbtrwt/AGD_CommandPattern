@@ -15,7 +15,11 @@ namespace Command.Replay
 
         public void SetCommandStack(Stack<ICommand> commandsToSet) => replayCommandStack = new Stack<ICommand>(commandsToSet);
 
-        public void ExecuteNext() => GameService.Instance.ProcessUnitCommand(replayCommandStack.Pop());
+        public void ExecuteNext()
+        {
+            if(replayCommandStack.Count > 0)
+                GameService.Instance.ProcessUnitCommand(replayCommandStack.Pop());
+        }
     }
 
     public enum ReplayState
