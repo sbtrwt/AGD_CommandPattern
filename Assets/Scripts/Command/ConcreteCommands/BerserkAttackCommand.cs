@@ -6,7 +6,7 @@ namespace Command.Commands
     public class BerserkAttackCommand : UnitCommand
     {
         private bool willHitTarget;
-        private const float hitChance = 0;
+        private const float hitChance = 0.66f;
 
         public BerserkAttackCommand(CommandData commandData)
         {
