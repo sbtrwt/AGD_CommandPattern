@@ -87,18 +87,18 @@ namespace Command.Player
             unitView.PlayAnimation(UnitAnimations.DEATH);
         }
 
-        public void PlayBattleAnimation(ActionType actionType, Vector3 battlePosition, Action callback)
+        public void PlayBattleAnimation(CommandType commandType, Vector3 battlePosition, Action callback)
         {
-            MoveToBattlePosition(battlePosition, callback, true, actionType);
+            MoveToBattlePosition(battlePosition, callback, true, commandType);
         }
 
-        private void MoveToBattlePosition(Vector3 battlePosition, Action callback = null,  bool shouldPlayActionAnimation = true, ActionType actionTypeToExecute = ActionType.None)
+        private void MoveToBattlePosition(Vector3 battlePosition, Action callback = null,  bool shouldPlayActionAnimation = true, CommandType commandTypeToExecute = CommandType.None)
         {
             float moveTime = Vector3.Distance(unitView.transform.position, battlePosition) / unitScriptableObject.MovementSpeed;
-            unitView.StartCoroutine(MoveToPositionOverTime(battlePosition, moveTime, callback, shouldPlayActionAnimation, actionTypeToExecute));
+            unitView.StartCoroutine(MoveToPositionOverTime(battlePosition, moveTime, callback, shouldPlayActionAnimation, commandTypeToExecute));
         }
 
-        private IEnumerator MoveToPositionOverTime(Vector3 targetPosition, float time, Action callback, bool shouldPlayActionAnimation, ActionType actionTypeToExecute)
+        private IEnumerator MoveToPositionOverTime(Vector3 targetPosition, float time, Action callback, bool shouldPlayActionAnimation, CommandType actionTypeToExecute)
         {
             float elapsedTime = 0;
             Vector3 startingPosition = unitView.transform.position;
@@ -119,9 +119,9 @@ namespace Command.Player
                 callback.Invoke();
         }
 
-        private void PlayActionAnimation(ActionType actionType)
+        private void PlayActionAnimation(CommandType actionType)
         {
-            if (actionType == ActionType.None)
+            if (actionType == CommandType.None)
                 return;
             
             if (actionType == unitScriptableObject.executableCommands[0])

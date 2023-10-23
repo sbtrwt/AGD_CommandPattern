@@ -6,12 +6,12 @@ namespace Command.Commands
     {
         private bool willHitTarget;
 
-        public AttackCommand(int actorUnitId, int targetUnitId, int actorPlayerId, int targetPlayerId)
+        public AttackCommand(CommandData commandData)
         {
-            ActorUnitID = actorUnitId;
-            TargetUnitID = targetUnitId;
-            ActorPlayerID = actorPlayerId;
-            TargetPlayerID = targetPlayerId;
+            ActorUnitID = commandData.ActorUnitID;
+            TargetUnitID = commandData.TargetUnitID;
+            ActorPlayerID = commandData.ActorPlayerID;
+            TargetPlayerID = commandData.TargetPlayerID;
 
             willHitTarget = WillHitTarget();
         }

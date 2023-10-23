@@ -2,11 +2,11 @@ using Command.Main;
 
 namespace Command.Commands
 {
-    public class HealCommand : UnitCommand
+    public class AttackStanceCommand : UnitCommand
     {
         private bool willHitTarget;
 
-        public HealCommand(CommandData commandData)
+        public AttackStanceCommand(CommandData commandData)
         {
             ActorUnitID = commandData.ActorUnitID;
             TargetUnitID = commandData.TargetUnitID;
@@ -16,7 +16,7 @@ namespace Command.Commands
             willHitTarget = WillHitTarget();
         }
 
-        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Heal).PerformAction(actorUnit, targetUnit, willHitTarget);
+        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.AttackStance).PerformAction(actorUnit, targetUnit, willHitTarget);
 
         public override bool WillHitTarget() => true;
     }
