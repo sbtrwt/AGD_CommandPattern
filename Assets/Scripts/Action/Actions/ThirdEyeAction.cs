@@ -2,17 +2,27 @@ using Command.Commands;
 using Command.Input;
 using Command.Main;
 using Command.Player;
+using UnityEngine;
 
 namespace Command.Actions
 {
     public class ThirdEyeAction : IAction
     {
+        private UnitController actorUnit;
+        private UnitController targetUnit;
         public TargetType TargetType => TargetType.Self;
 
         public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(CommandType.BerserkAttack);
-            if (successful)
+            this.actorUnit = actorUnit;
+            this.targetUnit = targetUnit;
+
+            actorUnit.PlayBattleAnimation(ActionType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+        }
+
+        public void OnActionAnimationCompleted()
+        {
+            if (IsSuccessful())
             {
                 int healthToConvert = (int)(targetUnit.CurrentHealth * 0.25f);
                 targetUnit.TakeDamage(healthToConvert);
@@ -21,5 +31,9 @@ namespace Command.Actions
             else
                 GameService.Instance.UIService.ActionMissed();
         }
+
+        public bool IsSuccessful() => true;
+
+        public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }
 }

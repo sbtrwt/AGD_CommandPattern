@@ -100,5 +100,13 @@ namespace Command.Player
             else
                 throw new System.Exception($"No Player found for the given Player ID: {playerId}");
         }
+
+        public void CheckGameOver()
+        {
+            if (player1.AllUnitsDead())
+                PlayerDied(player1);
+            else if (player2.AllUnitsDead())
+                PlayerDied(player2);
+        }
     }
 }

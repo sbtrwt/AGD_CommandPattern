@@ -1,6 +1,9 @@
 using UnityEngine;
 using Command.Main;
 using Command.Commands;
+using System.Collections;
+using System;
+using Object = UnityEngine.Object;
 
 namespace Command.Player
 {
@@ -12,6 +15,7 @@ namespace Command.Player
 
         public int UnitID { get; private set; }
         private UnitAliveState aliveState;
+        private Vector3 originalPosition;
         public int CurrentPower;
         public int CurrentMaxHealth;
         public int CurrentHealth { get; private set; }
@@ -22,6 +26,7 @@ namespace Command.Player
             Owner = owner;
             this.unitScriptableObject = unitScriptableObject;
             UnitID = unitScriptableObject.UnitID;
+            originalPosition = unitPosition;
 
             InitializeView(unitPosition);
             InitializeVariables();
@@ -37,8 +42,7 @@ namespace Command.Player
 
         private void InitializeVariables()
         {
-            CurrentMaxHealth = unitScriptableObject.MaxHealth;
-            CurrentHealth = CurrentMaxHealth;
+            CurrentMaxHealth = CurrentHealth = unitScriptableObject.MaxHealth;
             CurrentPower = unitScriptableObject.Power;
             SetAliveState(UnitAliveState.ALIVE);
             SetUsedState(UnitUsedState.NOT_USED);
@@ -66,9 +70,7 @@ namespace Command.Player
                 UnitDied();
             }
             else
-            {
-                // Play Hit Animation ???
-            }
+                unitView.PlayAnimation(UnitAnimations.HIT);
 
             unitView.UpdateHealthBar((float) CurrentHealth / CurrentMaxHealth);
         }
@@ -81,12 +83,47 @@ namespace Command.Player
 
         private void UnitDied()
         {
-            aliveState = UnitAliveState.DEAD;
-            // Play Death Animation.
+            SetAliveState(UnitAliveState.DEAD);
+            unitView.PlayAnimation(UnitAnimations.DEATH);
         }
 
-        public void PlayActionAnimation(CommandType actionType)
+        public void PlayBattleAnimation(ActionType actionType, Vector3 battlePosition, Action callback)
         {
+            MoveToBattlePosition(battlePosition, callback, true, actionType);
+        }
+
+        private void MoveToBattlePosition(Vector3 battlePosition, Action callback = null,  bool shouldPlayActionAnimation = true, ActionType actionTypeToExecute = ActionType.None)
+        {
+            float moveTime = Vector3.Distance(unitView.transform.position, battlePosition) / unitScriptableObject.MovementSpeed;
+            unitView.StartCoroutine(MoveToPositionOverTime(battlePosition, moveTime, callback, shouldPlayActionAnimation, actionTypeToExecute));
+        }
+
+        private IEnumerator MoveToPositionOverTime(Vector3 targetPosition, float time, Action callback, bool shouldPlayActionAnimation, ActionType actionTypeToExecute)
+        {
+            float elapsedTime = 0;
+            Vector3 startingPosition = unitView.transform.position;
+
+            while (elapsedTime < time)
+            {
+                unitView.transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime / time);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            unitView.transform.position = targetPosition;
+
+            if(shouldPlayActionAnimation)
+                PlayActionAnimation(actionTypeToExecute);
+
+            if (callback != null)
+                callback.Invoke();
+        }
+
+        private void PlayActionAnimation(ActionType actionType)
+        {
+            if (actionType == ActionType.None)
+                return;
+            
             if (actionType == unitScriptableObject.executableCommands[0])
                 unitView.PlayAnimation(UnitAnimations.ACTION1);
             else if (actionType == unitScriptableObject.executableCommands[1])
@@ -97,6 +134,7 @@ namespace Command.Player
 
         public void OnActionExecuted()
         {
+            MoveToBattlePosition(originalPosition, null, false);
             SetUsedState(UnitUsedState.USED);
             Owner.OnUnitTurnEnded();
             unitView.SetUnitIndicator(false);
@@ -106,12 +144,19 @@ namespace Command.Player
 
         public void Revive() => SetAliveState(UnitAliveState.ALIVE);
 
-        public void Destroy() => Object.Destroy(unitView.gameObject);
+        public void Destroy() => UnityEngine.Object.Destroy(unitView.gameObject);
 
         public void ResetUnitIndicator() => unitView.SetUnitIndicator(false);
 
         public void ProcessUnitCommand(UnitCommand commandToProcess) => GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
 
+        public Vector3 GetEnemyPosition() 
+        {
+            if (Owner.PlayerID == 1)
+                return unitView.transform.position + unitScriptableObject.EnemyBattlePositionOffset;
+            else
+                return unitView.transform.position - unitScriptableObject.EnemyBattlePositionOffset;
+        }
     }
 
     public enum UnitUsedState

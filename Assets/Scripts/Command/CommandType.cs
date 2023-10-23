@@ -2,6 +2,7 @@ namespace Command.Commands
 {
     public enum CommandType
     {
+        None,
         Attack,
         Heal,
         AttackStance,

@@ -1,18 +1,32 @@
 using Command.Commands;
 using Command.Input;
 using Command.Player;
+using UnityEngine;
 
 namespace Command.Actions
 {
     public class HealAction : IAction
     {
+        private UnitController actorUnit;
+        private UnitController targetUnit;
         public TargetType TargetType => TargetType.Friendly;
 
         public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool successful)
         {
-            actorUnit.PlayActionAnimation(CommandType.Heal);
-            if(successful)
+            this.actorUnit = actorUnit;
+            this.targetUnit = targetUnit;
+
+            actorUnit.PlayBattleAnimation(ActionType.Heal, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+        }
+
+        public void OnActionAnimationCompleted()
+        {
+            if (IsSuccessful())
                 targetUnit.RestoreHealth(actorUnit.CurrentPower);
         }
+
+        public bool IsSuccessful() => true;
+
+        public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }
 }
