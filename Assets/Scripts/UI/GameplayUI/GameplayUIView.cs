@@ -8,11 +8,13 @@ namespace Command.UI
     {
         private GameplayUIController controller;
         [SerializeField] TextMeshProUGUI turnText;
+        [SerializeField] Button undoButton;
         [SerializeField] TextMeshProUGUI missedText;
 
         public void SetController(GameplayUIController controllerToSet) 
         {
             controller = controllerToSet;
+            undoButton.onClick.AddListener(controller.OnUndoButtonClicked);
             missedText.canvasRenderer.SetAlpha(0);
         }
 

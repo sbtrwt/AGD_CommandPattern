@@ -17,5 +17,7 @@ namespace Command.UI
         public void SetTurnNumber(int turnNumber) => gameplayView.SetTurnText($"Turn: {turnNumber}");
 
         public void ShowMissedAction() => gameplayView.ShowMissedText();
+
+        public void OnUndoButtonClicked() => GameService.Instance.CommandInvoker.Undo();
     }
 }
