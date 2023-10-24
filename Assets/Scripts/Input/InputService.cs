@@ -36,11 +36,18 @@ namespace Command.Input
             SetTargetType(selectedActionType);
         }
 
-        private void SetTargetType(ActionType selectedActionType) => targetType = GameService.Instance.ActionService.GetTargetTypeForAction(selectedActionType);
+        private void SetTargetType(ActionType selectedActionType)
+        {
+            targetType = GameService.Instance.ActionService.GetTargetTypeForAction(selectedActionType);
+
+            var isPlayer1 = GameService.Instance.PlayerService.isPlayer1Active();
+            GameService.Instance.UIService.ToggleTargetChoosingBackgroundOverLay(isPlayer1, targetType);
+        }
 
         public void OnTargetSelected(UnitController targetUnit)
         {
             SetInputState(InputState.EXECUTING_INPUT);
+
             GameService.Instance.PlayerService.PerformAction(selectedActionType, targetUnit);
         }
     }

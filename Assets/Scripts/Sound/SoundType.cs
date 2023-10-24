@@ -4,9 +4,15 @@ namespace Command.Sound
     public enum SoundType
     {
         BACKGROUND_MUSIC,
-        SWORD_ATTACK,
-        HEAL_MAGIC,
-        UNIT_HIT,
-        UNIT_DEATH
+        SWORD_SLASH,
+        HEAL,
+        ATTACK_STANCE,
+        BERSERK_ATTACK,
+        CLEANSE,
+        FIRE_ATTACK,
+        KNIFE_SLASH,
+        MEDITATE,
+        MAGIC_BALL,
+        BATTLE_START
     }
 }

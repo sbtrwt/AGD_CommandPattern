@@ -63,6 +63,12 @@ namespace Command.Player
                 activePlayer = activePlayer == player1 ? player2 : player1;
         }
 
+        public bool isPlayer1Active()
+        {
+            var value = activePlayer == player1 ? true : false;
+            return value;
+        }
+
         public void OnPlayerTurnCompleted() => StartNextTurn();
 
         public void PerformAction(ActionType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit);

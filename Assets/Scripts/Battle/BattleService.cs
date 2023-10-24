@@ -27,6 +27,7 @@ namespace Command.Battle
             var battleDataToLoad = GetBattleDataByID(battleId);
             SetBackgroundImage(battleDataToLoad.BattleBackgroundImage);
             GameService.Instance.UIService.ShowGameplayView();
+            GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BATTLE_START);
             GameService.Instance.PlayerService.Init(battleDataToLoad.Player1Data, battleDataToLoad.Player2Data);
         }
 

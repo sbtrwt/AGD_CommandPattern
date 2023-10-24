@@ -60,5 +60,13 @@ namespace Command.UI
             Hide();
         }
 
+        public void ToggleSelectionButtonContainerPosition(bool isLeft)
+        {
+            if (isLeft)
+                actionSelectionView.SetContainerToLeft();
+            else
+                actionSelectionView.SetContainerToRight();
+        }
+
     }
 }

@@ -40,6 +40,14 @@ namespace Command.UI
 
         public void ShowGameplayView() => gameplayController.Show();
 
+        public void ToggleActionChoosingBackgroundOverLay(bool isPlayer1) => gameplayController.ToggleActionChoosingBackgroundOverLay(isPlayer1);
+
+        public void ToggleTargetChoosingBackgroundOverLay(bool isPlayer, TargetType targetType) => gameplayController.ToggleTargetChoosingBackgroundOverLay(isPlayer, targetType);
+
+        public void ResetBattleBackgroundOverlay() => gameplayController.ResetBattleBackgroundOverlay();
+
+        public void ToggleSelectionButtonContainerPosition(bool isPlayer1) => actionSelectionController.ToggleSelectionButtonContainerPosition(isPlayer1);
+
         public void ShowActionSelectionView(List<ActionType> executableActions)
         {
             actionSelectionController.Show(executableActions);

@@ -14,12 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioList:
   - soundType: 0
-    audio: {fileID: 8300000, guid: 335115aa43bc9e64f84cf26b6b72a1fb, type: 3}
+    audio: {fileID: 8300000, guid: dcd0c621ad0f8eb47b4ddb6f782d0433, type: 3}
   - soundType: 1
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 3ea40e75f41f62b4d9257e897862b3d6, type: 3}
   - soundType: 2
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 5cf61034040c8ca4c8ac49d271ce0946, type: 3}
   - soundType: 3
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 693b0b6f77ffb7742ba1366cd5d217c1, type: 3}
   - soundType: 4
-    audio: {fileID: 0}
+    audio: {fileID: 8300000, guid: 06a85d91b5c746144b07bc859255e9d1, type: 3}
+  - soundType: 5
+    audio: {fileID: 8300000, guid: 0e248880e8f25d8459d3cca96cacb5fb, type: 3}
+  - soundType: 6
+    audio: {fileID: 8300000, guid: e927abf4dca3ba34f8bafe2d65298b29, type: 3}
+  - soundType: 8
+    audio: {fileID: 8300000, guid: 1c15268f3780dc34c99d310f53266368, type: 3}
+  - soundType: 9
+    audio: {fileID: 8300000, guid: 2b7bfbd648970f849996a491155b9570, type: 3}
+  - soundType: 7
+    audio: {fileID: 8300000, guid: 3b23ccd5f44f60a44b98c26d078634d7, type: 3}
+  - soundType: 10
+    audio: {fileID: 8300000, guid: 6aef7e8b5c26f4b48b1cae8299f9bf01, type: 3}

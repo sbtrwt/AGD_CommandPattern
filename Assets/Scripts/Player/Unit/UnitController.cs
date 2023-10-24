@@ -51,7 +51,13 @@ namespace Command.Player
         public void StartUnitTurn()
         {
             unitView.SetUnitIndicator(true);
+
+            var isPlayer1 = GameService.Instance.PlayerService.isPlayer1Active() ? true : false;
+            GameService.Instance.UIService.ToggleActionChoosingBackgroundOverLay(isPlayer1);
+
             GameService.Instance.UIService.ShowActionSelectionView(unitScriptableObject.executableCommands);
+
+            GameService.Instance.UIService.ToggleSelectionButtonContainerPosition(isPlayer1);
         }
 
         private void SetAliveState(UnitAliveState stateToSet) => aliveState = stateToSet;
@@ -89,6 +95,7 @@ namespace Command.Player
 
         public void PlayBattleAnimation(ActionType actionType, Vector3 battlePosition, Action callback)
         {
+            GameService.Instance.UIService.ResetBattleBackgroundOverlay();
             MoveToBattlePosition(battlePosition, callback, true, actionType);
         }
 
@@ -112,8 +119,11 @@ namespace Command.Player
 
             unitView.transform.position = targetPosition;
 
-            if(shouldPlayActionAnimation)
+            if (shouldPlayActionAnimation)
+            {
                 PlayActionAnimation(actionTypeToExecute);
+                GameService.Instance.SoundService.PlayAttackSFX(actionTypeToExecute, unitScriptableObject.UnitName);
+            }
 
             if (callback != null)
                 callback.Invoke();

@@ -12,6 +12,10 @@ namespace Command.UI
 
         public ActionButtonView AddButton(ActionButtonView actionButtonPrefab) => Instantiate(actionButtonPrefab, actionButtonContainer);
 
+        public void SetContainerToLeft() => actionButtonContainer.localPosition = new Vector3(-469, actionButtonContainer.localPosition.y, 0);
+
+        public void SetContainerToRight() => actionButtonContainer.localPosition = new Vector3(469, actionButtonContainer.localPosition.y, 0);
+
         public void RemoveButton(ActionButtonView buttonToDestroy) => Destroy(buttonToDestroy.gameObject);
     }
 }
