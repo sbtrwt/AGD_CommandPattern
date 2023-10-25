@@ -8,11 +8,7 @@ namespace Command.Commands
 
         public HealCommand(CommandData commandData)
         {
-            ActorUnitID = commandData.ActorUnitID;
-            TargetUnitID = commandData.TargetUnitID;
-            ActorPlayerID = commandData.ActorPlayerID;
-            TargetPlayerID = commandData.TargetPlayerID;
-
+            this.commandData = commandData;
             willHitTarget = WillHitTarget();
         }
 

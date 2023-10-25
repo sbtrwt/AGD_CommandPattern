@@ -83,7 +83,7 @@ namespace Command.Player
             units.Clear();
         }
 
-        public void ProcessUnitCommand(UnitCommand commandToProcess) => GetUnitByID(commandToProcess.ActorUnitID).ProcessUnitCommand(commandToProcess);
+        public void ProcessUnitCommand(UnitCommand commandToProcess) => GetUnitByID(commandToProcess.commandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
 
         public void ResetCurrentActivePlayer()
         {
