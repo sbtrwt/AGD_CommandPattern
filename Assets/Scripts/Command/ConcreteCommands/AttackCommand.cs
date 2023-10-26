@@ -24,7 +24,7 @@ namespace Command.Commands
                     targetUnit.Revive();
 
                 targetUnit.RestoreHealth(actorUnit.CurrentPower);
-                actorUnit.Owner.ResetCurrentActivePlayer();
+                actorUnit.Owner.ResetCurrentActiveUnit();
             }
         }
     }

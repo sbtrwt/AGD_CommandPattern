@@ -19,7 +19,7 @@ namespace Command.Commands
             if (willHitTarget)
             {
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
-                actorUnit.Owner.ResetCurrentActivePlayer();
+                actorUnit.Owner.ResetCurrentActiveUnit();
             }
         }
 

@@ -32,7 +32,7 @@ namespace Command.Commands
 
                 actorUnit.RestoreHealth(actorUnit.CurrentPower * 2);
             }
-            actorUnit.Owner.ResetCurrentActivePlayer();
+            actorUnit.Owner.ResetCurrentActiveUnit();
         }
 
         public override bool WillHitTarget() => Random.Range(0f, 1f) < hitChance;

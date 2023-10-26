@@ -27,7 +27,7 @@ namespace Command.Commands
             int healthToRestore = (int)(previousHealth * 0.25f);
             targetUnit.RestoreHealth(healthToRestore);
             targetUnit.CurrentPower -= healthToRestore;
-            actorUnit.Owner.ResetCurrentActivePlayer();
+            actorUnit.Owner.ResetCurrentActiveUnit();
         }
 
         public override bool WillHitTarget() => true;
