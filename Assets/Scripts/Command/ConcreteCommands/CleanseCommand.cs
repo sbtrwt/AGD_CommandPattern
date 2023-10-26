@@ -25,6 +25,8 @@ namespace Command.Commands
         {
             if (willHitTarget)
                 targetUnit.CurrentPower = previousPower;
+
+            actorUnit.Owner.ResetCurrentActivePlayer();
         }
 
         public override bool WillHitTarget() => Random.Range(0f, 1f) < hitChance;

@@ -25,6 +25,6 @@ namespace Command.Commands
 
         private bool RegistryEmpty() => commandRegistry.Count == 0;
 
-        private bool CommandBelongsToActivePlayer() => (commandRegistry.Peek() as UnitCommand).ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
+        private bool CommandBelongsToActivePlayer() => (commandRegistry.Peek() as UnitCommand).commandData.ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
     }
 }

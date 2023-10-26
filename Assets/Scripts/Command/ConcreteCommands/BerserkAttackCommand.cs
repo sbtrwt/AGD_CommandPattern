@@ -24,7 +24,6 @@ namespace Command.Commands
                     targetUnit.Revive();
 
                 targetUnit.RestoreHealth(actorUnit.CurrentPower * 2);
-                actorUnit.Owner.ResetCurrentActivePlayer();
             }
             else
             {
@@ -32,8 +31,8 @@ namespace Command.Commands
                     actorUnit.Revive();
 
                 actorUnit.RestoreHealth(actorUnit.CurrentPower * 2);
-                actorUnit.Owner.ResetCurrentActivePlayer();
             }
+            actorUnit.Owner.ResetCurrentActivePlayer();
         }
 
         public override bool WillHitTarget() => Random.Range(0f, 1f) < hitChance;

@@ -27,6 +27,7 @@ namespace Command.Commands
                 targetUnit.CurrentMaxHealth = previousMaxHealth;
                 targetUnit.TakeDamage(healthToReduce);
             }
+            actorUnit.Owner.ResetCurrentActivePlayer();
         }
 
         public override bool WillHitTarget() => true;
