@@ -11,11 +11,7 @@ namespace Command.Commands
 
         public CleanseCommand(CommandData commandData)
         {
-            ActorUnitID = commandData.ActorUnitID;
-            TargetUnitID = commandData.TargetUnitID;
-            ActorPlayerID = commandData.ActorPlayerID;
-            TargetPlayerID = commandData.TargetPlayerID;
-
+            this.commandData = commandData;
             willHitTarget = WillHitTarget();
         }
 
@@ -29,6 +25,8 @@ namespace Command.Commands
         {
             if (willHitTarget)
                 targetUnit.CurrentPower = previousPower;
+
+            actorUnit.Owner.ResetCurrentActiveUnit();
         }
 
         public override bool WillHitTarget() => Random.Range(0f, 1f) < hitChance;

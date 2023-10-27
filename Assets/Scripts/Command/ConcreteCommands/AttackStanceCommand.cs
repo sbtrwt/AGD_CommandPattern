@@ -8,11 +8,7 @@ namespace Command.Commands
 
         public AttackStanceCommand(CommandData commandData)
         {
-            ActorUnitID = commandData.ActorUnitID;
-            TargetUnitID = commandData.TargetUnitID;
-            ActorPlayerID = commandData.ActorPlayerID;
-            TargetPlayerID = commandData.TargetPlayerID;
-
+            this.commandData = commandData;
             willHitTarget = WillHitTarget();
         }
 
@@ -23,7 +19,7 @@ namespace Command.Commands
             if (willHitTarget)
             {
                 targetUnit.CurrentPower -= (int)(targetUnit.CurrentPower * 0.2f);
-                actorUnit.Owner.ResetCurrentActivePlayer();
+                actorUnit.Owner.ResetCurrentActiveUnit();
             }
         }
 

@@ -9,11 +9,7 @@ namespace Command.Commands
 
         public ThirdEyeCommand(CommandData commandData)
         {
-            ActorUnitID = commandData.ActorUnitID;
-            TargetUnitID = commandData.TargetUnitID;
-            ActorPlayerID = commandData.ActorPlayerID;
-            TargetPlayerID = commandData.TargetPlayerID;
-
+            this.commandData = commandData;
             willHitTarget = WillHitTarget();
         }
 
@@ -31,7 +27,7 @@ namespace Command.Commands
             int healthToRestore = (int)(previousHealth * 0.25f);
             targetUnit.RestoreHealth(healthToRestore);
             targetUnit.CurrentPower -= healthToRestore;
-            actorUnit.Owner.ResetCurrentActivePlayer();
+            actorUnit.Owner.ResetCurrentActiveUnit();
         }
 
         public override bool WillHitTarget() => true;

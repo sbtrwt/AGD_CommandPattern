@@ -8,11 +8,7 @@ namespace Command.Commands
 
         public AttackCommand(CommandData commandData)
         {
-            ActorUnitID = commandData.ActorUnitID;
-            TargetUnitID = commandData.TargetUnitID;
-            ActorPlayerID = commandData.ActorPlayerID;
-            TargetPlayerID = commandData.TargetPlayerID;
-
+            this.commandData = commandData;
             willHitTarget = WillHitTarget();
         }
 
@@ -28,7 +24,7 @@ namespace Command.Commands
                     targetUnit.Revive();
 
                 targetUnit.RestoreHealth(actorUnit.CurrentPower);
-                actorUnit.Owner.ResetCurrentActivePlayer();
+                actorUnit.Owner.ResetCurrentActiveUnit();
             }
         }
     }

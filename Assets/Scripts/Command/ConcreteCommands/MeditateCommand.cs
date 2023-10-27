@@ -9,11 +9,7 @@ namespace Command.Commands
 
         public MeditateCommand(CommandData commandData)
         {
-            ActorUnitID = commandData.ActorUnitID;
-            TargetUnitID = commandData.TargetUnitID;
-            ActorPlayerID = commandData.ActorPlayerID;
-            TargetPlayerID = commandData.TargetPlayerID;
-
+            this.commandData = commandData;
             willHitTarget = WillHitTarget();
         }
 
@@ -31,6 +27,7 @@ namespace Command.Commands
                 targetUnit.CurrentMaxHealth = previousMaxHealth;
                 targetUnit.TakeDamage(healthToReduce);
             }
+            actorUnit.Owner.ResetCurrentActiveUnit();
         }
 
         public override bool WillHitTarget() => true;
