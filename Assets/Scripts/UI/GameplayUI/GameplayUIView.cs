@@ -2,16 +2,20 @@ using Command.Input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace Command.UI
 {
     public class GameplayUIView : MonoBehaviour, IUIView
     {
         private GameplayUIController controller;
-        [SerializeField] TextMeshProUGUI turnText;
-        [SerializeField] TextMeshProUGUI missedText;
-        [SerializeField] Image Player1BackgroundOverlay;
-        [SerializeField] Image Player2BackgroundOverlay;
+        [SerializeField] private TextMeshProUGUI turnText;
+        [SerializeField] private TextMeshProUGUI missedText;
+        [SerializeField] private Image Player1BackgroundOverlay;
+        [SerializeField] private Image Player2BackgroundOverlay;
+        [SerializeField] private Color FriendlyOverlayColor;
+        [SerializeField] private Color EnemyOverlayColor;
+        [SerializeField] private Image backgroundImage;
 
         public void SetController(GameplayUIController controllerToSet) 
         {
@@ -27,7 +31,7 @@ namespace Command.UI
 
         public void ToggleActionChoosingBackgroundOverLay(bool isPlayer1)
         {
-            ResetBackgroundOverlay();
+            /*ResetBackgroundOverlay();
 
             var color = Color.green;
             color.a = 0.185f;
@@ -35,41 +39,38 @@ namespace Command.UI
             if (isPlayer1)
             {
                 Player1BackgroundOverlay.color = color;
-                Player1BackgroundOverlay.gameObject.SetActive(true);
-                Player2BackgroundOverlay.gameObject.SetActive(false);
+                Player1BackgroundOverlay.enabled = true;
+                Player2BackgroundOverlay.enabled = false;
             }
             else
             {
                 Player2BackgroundOverlay.color = color;
-                Player2BackgroundOverlay.gameObject.SetActive(true);
-                Player1BackgroundOverlay.gameObject.SetActive(false);
-            }
+                Player2BackgroundOverlay.enabled = true;
+                Player1BackgroundOverlay.enabled = false;
+            }*/
         }
 
-        public void ToggleTargetChoosingBackgroundOverLay(bool isPlayer1, TargetType targetType)
+        public void ShowTargetOverlay(int targetPlayer, OverlayColorType overlayColorType)
         {
-            ResetBackgroundOverlay();
-
-            var color = Color.red;
-            color.a = 0.185f;
-
-            switch (targetType)
+            switch(targetPlayer)
             {
-                case TargetType.Enemy:
-                    var target = isPlayer1 ? Player2BackgroundOverlay : Player1BackgroundOverlay;
-                    target.color = color;
-                    target.gameObject.SetActive(true);
+                case 1:
+                    Player1BackgroundOverlay.enabled = true;
+                    SetOverlayColor(Player1BackgroundOverlay, overlayColorType);
                     break;
-                case TargetType.Friendly:
-                    ToggleActionChoosingBackgroundOverLay(isPlayer1);
+                case 2:
+                    Player2BackgroundOverlay.enabled = true;
+                    SetOverlayColor(Player2BackgroundOverlay, overlayColorType);
+                    break;
+                default:
                     break;
             }
         }
 
         public void ResetBackgroundOverlay()
         {
-            Player1BackgroundOverlay.gameObject.SetActive(false);
-            Player2BackgroundOverlay.gameObject.SetActive(false);
+            Player1BackgroundOverlay.enabled = false;
+            Player2BackgroundOverlay.enabled = false;
         }
 
         public void ShowMissedText()
@@ -78,5 +79,33 @@ namespace Command.UI
             missedText.canvasRenderer.SetAlpha(1);
             missedText.CrossFadeAlpha(0, 2, false);
         }
+
+        public void SetOverlayColor(Image overlayImage, OverlayColorType colorType)
+        {
+            switch(colorType)
+            {
+                case OverlayColorType.Friendly:
+                    overlayImage.color = FriendlyOverlayColor;
+                    break;
+                case OverlayColorType.Enemy:
+                    overlayImage.color = EnemyOverlayColor;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void SetBattleBackgroundImage(Sprite bgSprite)
+        {
+            backgroundImage.gameObject.SetActive(true);
+            backgroundImage.sprite = bgSprite;
+        } 
+    }
+
+    [Serializable]
+    public enum OverlayColorType
+    {
+        Friendly,
+        Enemy
     }
 }

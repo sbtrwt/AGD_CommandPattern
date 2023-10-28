@@ -42,7 +42,7 @@ namespace Command.UI
 
         public void ToggleActionChoosingBackgroundOverLay(bool isPlayer1) => gameplayController.ToggleActionChoosingBackgroundOverLay(isPlayer1);
 
-        public void ToggleTargetChoosingBackgroundOverLay(bool isPlayer, TargetType targetType) => gameplayController.ToggleTargetChoosingBackgroundOverLay(isPlayer, targetType);
+        public void ShowTargetOverlay(int activePlayer, TargetType targetType) => gameplayController.ShowTargetOverlay(activePlayer, targetType);
 
         public void ResetBattleBackgroundOverlay() => gameplayController.ResetBattleBackgroundOverlay();
 
@@ -66,5 +66,6 @@ namespace Command.UI
 
         public void ActionMissed() => gameplayController.ShowMissedAction();
 
+        public void SetBattleBackgroundImage(Sprite bgSprite) => gameplayController.SetBattleBackgroundImage(bgSprite);
     }
 }

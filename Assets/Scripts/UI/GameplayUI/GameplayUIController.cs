@@ -1,5 +1,6 @@
 using Command.Input;
 using Command.Main;
+using UnityEngine;
 
 namespace Command.UI
 {
@@ -19,10 +20,31 @@ namespace Command.UI
 
         public void ToggleActionChoosingBackgroundOverLay(bool isPlayer1) => gameplayView.ToggleActionChoosingBackgroundOverLay(isPlayer1);
 
-        public void ToggleTargetChoosingBackgroundOverLay(bool isPlayer, TargetType targetType) => gameplayView.ToggleTargetChoosingBackgroundOverLay(isPlayer, targetType);
+        public void ShowTargetOverlay(int activePlayer, TargetType targetType)
+        {
+            gameplayView.ResetBackgroundOverlay();
+
+            switch (activePlayer)
+            {
+                case 1:
+                    if (targetType == TargetType.Enemy)
+                        gameplayView.ShowTargetOverlay(2, OverlayColorType.Enemy);
+                    else
+                        gameplayView.ShowTargetOverlay(1, OverlayColorType.Friendly);
+                    break;
+                case 2:
+                    if (targetType == TargetType.Enemy)
+                        gameplayView.ShowTargetOverlay(1, OverlayColorType.Enemy);
+                    else
+                        gameplayView.ShowTargetOverlay(2, OverlayColorType.Friendly);
+                    break;
+            }
+        }
 
         public void ResetBattleBackgroundOverlay() => gameplayView.ResetBackgroundOverlay();
 
         public void ShowMissedAction() => gameplayView.ShowMissedText();
+
+        public void SetBattleBackgroundImage(Sprite bgSprite) => gameplayView.SetBattleBackgroundImage(bgSprite);
     }
 }
