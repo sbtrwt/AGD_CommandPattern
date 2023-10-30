@@ -8,15 +8,12 @@ namespace Command.Battle
     public class BattleService
     {
         private List<BattleScriptableObject> battleScriptableObjects;
-        private Image backgroundImage;
         private int currentBattleId;
 
-        public BattleService(List<BattleScriptableObject> battleScriptableObjects, Image backgroundImage)
+        public BattleService(List<BattleScriptableObject> battleScriptableObjects)
         {
             this.battleScriptableObjects = battleScriptableObjects;
-            this.backgroundImage = backgroundImage;
             SubscribeToEvents();
-            backgroundImage.gameObject.SetActive(false);
         }
 
         private void SubscribeToEvents()
@@ -29,19 +26,14 @@ namespace Command.Battle
         {
             currentBattleId = battleId;
             var battleDataToLoad = GetBattleDataByID(battleId);
-            SetBackgroundImage(battleDataToLoad.BattleBackgroundImage);
+            GameService.Instance.UIService.SetBattleBackgroundImage(battleDataToLoad.BattleBackgroundImage);
             GameService.Instance.UIService.ShowGameplayView();
+            GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BATTLE_START);
             GameService.Instance.PlayerService.Init(battleDataToLoad.Player1Data, battleDataToLoad.Player2Data);
         }
 
         private void ReplayBattle() => LoadBattle(currentBattleId);
 
         private BattleScriptableObject GetBattleDataByID(int battleId) => battleScriptableObjects.Find(battleSO => battleSO.BattleID == battleId);
-
-        private void SetBackgroundImage(Sprite bgSprite)
-        {
-            backgroundImage.gameObject.SetActive(true);
-            backgroundImage.sprite = bgSprite;
-        }
     }
 }

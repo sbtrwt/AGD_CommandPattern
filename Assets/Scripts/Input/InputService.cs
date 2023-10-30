@@ -33,10 +33,17 @@ namespace Command.Input
         {
             this.selectedCommandType = selectedActionType;
             SetInputState(InputState.SELECTING_TARGET);
-            SetTargetType(selectedActionType);
+            TargetType targetType = SetTargetType(selectedActionType);
+            ShowTargetSelectionUI(targetType);
         }
 
-        private void SetTargetType(CommandType selectedActionType) => targetType = GameService.Instance.ActionService.GetTargetTypeForAction(selectedActionType);
+        private void ShowTargetSelectionUI(TargetType selectedTargetType)
+        {
+            int playerID = GameService.Instance.PlayerService.ActivePlayerID;
+            GameService.Instance.UIService.ShowTargetOverlay(playerID, selectedTargetType);
+        }
+
+        private TargetType SetTargetType(CommandType selectedCommandType) => targetType = GameService.Instance.ActionService.GetTargetTypeForAction(selectedCommandType);
 
         public void OnTargetSelected(UnitController targetUnit)
         {

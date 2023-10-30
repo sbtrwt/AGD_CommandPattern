@@ -43,7 +43,6 @@ namespace Command.Main
         // Scene References:
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource bgMusicSource;
-        [SerializeField] private Image backgroundImage;
 
         private void Start()
         {
