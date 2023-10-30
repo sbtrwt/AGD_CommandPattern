@@ -21,6 +21,8 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted()
         {
+            GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.MEDITATE);
+
             if (IsSuccessful())
             {
                 var healthToIncrease = (int)(targetUnit.CurrentMaxHealth * 0.2f);

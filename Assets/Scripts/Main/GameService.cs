@@ -41,7 +41,6 @@ namespace Command.Main
         // Scene References:
         [SerializeField] private AudioSource sfxSource;
         [SerializeField] private AudioSource bgMusicSource;
-        [SerializeField] private Image backgroundImage;
 
         private void Start()
         {
@@ -49,7 +48,7 @@ namespace Command.Main
             EventService = new EventService();
             ActionService = new ActionService();
             InputService = new InputService();
-            BattleService = new BattleService(battleScriptableObjects, backgroundImage);
+            BattleService = new BattleService(battleScriptableObjects);
             PlayerService = new PlayerService();
             uiService.Init(battleScriptableObjects.Count);
             CommandInvoker = new CommandInvoker();

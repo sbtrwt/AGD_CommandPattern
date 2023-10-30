@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Unit 1-3
   m_EditorClassIdentifier: 
   UnitID: 3
+  UnitType: 3
   UnitPrefab: {fileID: 7170176875333329667, guid: 8346e216771ef4d4d91d50605efc7328, type: 3}
   MaxHealth: 10
   Power: 5
