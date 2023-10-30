@@ -40,7 +40,6 @@ namespace Command.Sound
                 backgroundMusic.loop = loopSound;
                 backgroundMusic.clip = clip;
                 backgroundMusic.Play();
-                backgroundMusic.volume = 0.05f;
             }
             else
                 Debug.LogError("No Audio Clip selected.");
