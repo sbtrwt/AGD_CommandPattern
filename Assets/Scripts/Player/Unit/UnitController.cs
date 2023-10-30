@@ -14,12 +14,14 @@ namespace Command.Player
         private UnitView unitView;
 
         public int UnitID { get; private set; }
+        public UnitType UnitType => unitScriptableObject.UnitType;
+        public int CurrentHealth { get; private set; }
+        public UnitUsedState UsedState { get; private set; }
+        
         private UnitAliveState aliveState;
         private Vector3 originalPosition;
         public int CurrentPower;
         public int CurrentMaxHealth;
-        public int CurrentHealth { get; private set; }
-        public UnitUsedState UsedState { get; private set; }
 
         public UnitController(PlayerController owner, UnitScriptableObject unitScriptableObject, Vector3 unitPosition)
         {
@@ -51,7 +53,9 @@ namespace Command.Player
         public void StartUnitTurn()
         {
             unitView.SetUnitIndicator(true);
+            GameService.Instance.UIService.ShowActionOverlay(Owner.PlayerID);
             GameService.Instance.UIService.ShowActionSelectionView(unitScriptableObject.executableCommands);
+            GameService.Instance.UIService.SetActionContainerAlignment(Owner.PlayerID);
         }
 
         private void SetAliveState(UnitAliveState stateToSet) => aliveState = stateToSet;
@@ -89,7 +93,8 @@ namespace Command.Player
 
         public void PlayBattleAnimation(CommandType commandType, Vector3 battlePosition, Action callback)
         {
-            MoveToBattlePosition(battlePosition, callback, true, commandType);
+            GameService.Instance.UIService.ResetBattleBackgroundOverlay();
+            MoveToBattlePosition(battlePosition, callback, true, actionType);
         }
 
         private void MoveToBattlePosition(Vector3 battlePosition, Action callback = null,  bool shouldPlayActionAnimation = true, CommandType commandTypeToExecute = CommandType.None)
@@ -112,7 +117,7 @@ namespace Command.Player
 
             unitView.transform.position = targetPosition;
 
-            if(shouldPlayActionAnimation)
+            if (shouldPlayActionAnimation)
                 PlayActionAnimation(actionTypeToExecute);
 
             if (callback != null)

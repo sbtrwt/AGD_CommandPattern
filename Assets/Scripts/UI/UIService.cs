@@ -40,7 +40,15 @@ namespace Command.UI
 
         public void ShowGameplayView() => gameplayController.Show();
 
-        public void ShowActionSelectionView(List<CommandType> executableActions)
+        public void ShowActionOverlay(int activePlayer) => gameplayController.ShowActionOverlay(activePlayer);
+
+        public void ShowTargetOverlay(int activePlayer, TargetType targetType) => gameplayController.ShowTargetOverlay(activePlayer, targetType);
+
+        public void ResetBattleBackgroundOverlay() => gameplayController.ResetBattleBackgroundOverlay();
+
+        public void SetActionContainerAlignment(int activePlayerID) => actionSelectionController.SetActionContainerAlignment(activePlayerID);
+
+        public void ShowActionSelectionView(List<ActionType> executableActions)
         {
             actionSelectionController.Show(executableActions);
             GameService.Instance.InputService.SetInputState(InputState.SELECTING_ACTION);
@@ -58,5 +66,6 @@ namespace Command.UI
 
         public void ActionMissed() => gameplayController.ShowMissedAction();
 
+        public void SetBattleBackgroundImage(Sprite bgSprite) => gameplayController.SetBattleBackgroundImage(bgSprite);
     }
 }
