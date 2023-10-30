@@ -1,5 +1,6 @@
 using Command.Commands;
 using Command.Input;
+using Command.Main;
 using Command.Player;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted()
         {
+            GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.HEAL);
+
             if (isSuccessful)
                 targetUnit.RestoreHealth(actorUnit.CurrentPower);
         }

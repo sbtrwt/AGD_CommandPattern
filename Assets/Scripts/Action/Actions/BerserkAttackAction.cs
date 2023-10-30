@@ -1,5 +1,6 @@
 using Command.Commands;
 using Command.Input;
+using Command.Main;
 using Command.Player;
 using UnityEngine;
 
@@ -24,6 +25,8 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted()
         {
+            GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BERSERK_ATTACK);
+
             if (isSuccessful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower * 2);
             else
