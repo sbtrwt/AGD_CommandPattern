@@ -94,7 +94,7 @@ namespace Command.Player
         public void PlayBattleAnimation(CommandType commandType, Vector3 battlePosition, Action callback)
         {
             GameService.Instance.UIService.ResetBattleBackgroundOverlay();
-            MoveToBattlePosition(battlePosition, callback, true, actionType);
+            MoveToBattlePosition(battlePosition, callback, true, commandType);
         }
 
         private void MoveToBattlePosition(Vector3 battlePosition, Action callback = null,  bool shouldPlayActionAnimation = true, CommandType commandTypeToExecute = CommandType.None)
