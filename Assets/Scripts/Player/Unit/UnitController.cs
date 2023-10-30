@@ -51,13 +51,9 @@ namespace Command.Player
         public void StartUnitTurn()
         {
             unitView.SetUnitIndicator(true);
-
-            var isPlayer1 = GameService.Instance.PlayerService.isPlayer1Active() ? true : false;
-            GameService.Instance.UIService.ToggleActionChoosingBackgroundOverLay(isPlayer1);
-
+            GameService.Instance.UIService.ShowActionOverlay(Owner.PlayerID);
             GameService.Instance.UIService.ShowActionSelectionView(unitScriptableObject.executableCommands);
-
-            GameService.Instance.UIService.ToggleSelectionButtonContainerPosition(isPlayer1);
+            GameService.Instance.UIService.SetActionContainerAlignment(Owner.PlayerID);
         }
 
         private void SetAliveState(UnitAliveState stateToSet) => aliveState = stateToSet;

@@ -18,25 +18,29 @@ namespace Command.UI
 
         public void SetTurnNumber(int turnNumber) => gameplayView.SetTurnText($"Turn: {turnNumber}");
 
-        public void ToggleActionChoosingBackgroundOverLay(bool isPlayer1) => gameplayView.ToggleActionChoosingBackgroundOverLay(isPlayer1);
+        public void ShowActionOverlay(int activePlayer)
+        {
+            ResetBattleBackgroundOverlay();
+            gameplayView.ShowPlayerOverlay(activePlayer, OverlayColorType.Neutral);
+        }
 
         public void ShowTargetOverlay(int activePlayer, TargetType targetType)
         {
-            gameplayView.ResetBackgroundOverlay();
+            ResetBattleBackgroundOverlay();
 
             switch (activePlayer)
             {
                 case 1:
                     if (targetType == TargetType.Enemy)
-                        gameplayView.ShowTargetOverlay(2, OverlayColorType.Enemy);
+                        gameplayView.ShowPlayerOverlay(2, OverlayColorType.Enemy);
                     else
-                        gameplayView.ShowTargetOverlay(1, OverlayColorType.Friendly);
+                        gameplayView.ShowPlayerOverlay(1, OverlayColorType.Friendly);
                     break;
                 case 2:
                     if (targetType == TargetType.Enemy)
-                        gameplayView.ShowTargetOverlay(1, OverlayColorType.Enemy);
+                        gameplayView.ShowPlayerOverlay(1, OverlayColorType.Enemy);
                     else
-                        gameplayView.ShowTargetOverlay(2, OverlayColorType.Friendly);
+                        gameplayView.ShowPlayerOverlay(2, OverlayColorType.Friendly);
                     break;
             }
         }

@@ -48,7 +48,6 @@ namespace Command.Input
         public void OnTargetSelected(UnitController targetUnit)
         {
             SetInputState(InputState.EXECUTING_INPUT);
-
             GameService.Instance.PlayerService.PerformAction(selectedActionType, targetUnit);
         }
     }

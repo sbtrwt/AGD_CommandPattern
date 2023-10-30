@@ -60,12 +60,19 @@ namespace Command.UI
             Hide();
         }
 
-        public void ToggleSelectionButtonContainerPosition(bool isLeft)
+        public void SetActionContainerAlignment(int activePlayerID)
         {
-            if (isLeft)
-                actionSelectionView.SetContainerToLeft();
-            else
-                actionSelectionView.SetContainerToRight();
+            switch(activePlayerID)
+            {
+                case 1:
+                    actionSelectionView.SetActionContainerAlignment(ActionContainerAlignment.Left);
+                    break;
+                case 2:
+                    actionSelectionView.SetActionContainerAlignment(ActionContainerAlignment.Right);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }

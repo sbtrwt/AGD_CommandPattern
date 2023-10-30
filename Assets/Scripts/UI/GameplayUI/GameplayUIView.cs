@@ -15,6 +15,7 @@ namespace Command.UI
         [SerializeField] private Image Player2BackgroundOverlay;
         [SerializeField] private Color FriendlyOverlayColor;
         [SerializeField] private Color EnemyOverlayColor;
+        [SerializeField] private Color ActionSelectionOverlayColor;
         [SerializeField] private Image backgroundImage;
 
         public void SetController(GameplayUIController controllerToSet) 
@@ -29,28 +30,7 @@ namespace Command.UI
 
         public void SetTurnText(string turnText) => this.turnText.SetText(turnText);
 
-        public void ToggleActionChoosingBackgroundOverLay(bool isPlayer1)
-        {
-            /*ResetBackgroundOverlay();
-
-            var color = Color.green;
-            color.a = 0.185f;
-
-            if (isPlayer1)
-            {
-                Player1BackgroundOverlay.color = color;
-                Player1BackgroundOverlay.enabled = true;
-                Player2BackgroundOverlay.enabled = false;
-            }
-            else
-            {
-                Player2BackgroundOverlay.color = color;
-                Player2BackgroundOverlay.enabled = true;
-                Player1BackgroundOverlay.enabled = false;
-            }*/
-        }
-
-        public void ShowTargetOverlay(int targetPlayer, OverlayColorType overlayColorType)
+        public void ShowPlayerOverlay(int targetPlayer, OverlayColorType overlayColorType)
         {
             switch(targetPlayer)
             {
@@ -90,6 +70,9 @@ namespace Command.UI
                 case OverlayColorType.Enemy:
                     overlayImage.color = EnemyOverlayColor;
                     break;
+                case OverlayColorType.Neutral:
+                    overlayImage.color = ActionSelectionOverlayColor;
+                    break;
                 default:
                     break;
             }
@@ -106,6 +89,7 @@ namespace Command.UI
     public enum OverlayColorType
     {
         Friendly,
-        Enemy
+        Enemy,
+        Neutral
     }
 }
