@@ -8,7 +8,7 @@ namespace Command.Player
     public class UnitScriptableObject : ScriptableObject
     {
         public int UnitID;
-        public UnitType UnitName;
+        public UnitType UnitType;
         public UnitView UnitPrefab;
         public int MaxHealth;
         public int Power;

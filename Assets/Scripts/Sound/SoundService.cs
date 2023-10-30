@@ -19,50 +19,6 @@ namespace Command.Sound
             PlaybackgroundMusic(SoundType.BACKGROUND_MUSIC, true);
         }
 
-        public void PlayAttackSFX(ActionType actionType, UnitType unitType)
-        {
-            switch (actionType)
-            {
-                case ActionType.Heal:
-                    PlaySoundEffects(SoundType.HEAL);
-                    break;
-                case ActionType.AttackStance:
-                    PlaySoundEffects(SoundType.ATTACK_STANCE);
-                    break;
-                case ActionType.Cleanse:
-                    PlaySoundEffects(SoundType.CLEANSE);
-                    break;
-                case ActionType.Meditate:
-                    PlaySoundEffects(SoundType.MEDITATE);
-                    break;
-                case ActionType.BerserkAttack:
-                    PlaySoundEffects(SoundType.BERSERK_ATTACK);
-                    break;
-                case ActionType.ThirdEye:
-                    PlaySoundEffects(SoundType.KNIFE_SLASH);
-                    break;
-                case ActionType.Attack:
-                    if (unitType == UnitType.WIZARD)
-                    {
-                        PlaySoundEffects(SoundType.MAGIC_BALL);
-                    }
-                    else if (unitType == UnitType.SWORD_MASTER)
-                    {
-                        PlaySoundEffects(SoundType.SWORD_SLASH);
-                    }
-                    else if (unitType == UnitType.BERSERKER)
-                    {
-                        PlaySoundEffects(SoundType.KNIFE_SLASH);
-                    }
-                    else if (unitType == UnitType.MAGE)
-                    {
-                        PlaySoundEffects(SoundType.FIRE_ATTACK);
-                    }
-                    break;
-
-            }
-        }
-
         public void PlaySoundEffects(SoundType soundType, bool loopSound = false)
         {
             AudioClip clip = GetSoundClip(soundType);

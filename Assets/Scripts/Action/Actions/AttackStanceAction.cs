@@ -21,6 +21,8 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted()
         {
+            GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.ATTACK_STANCE);
+
             if (IsSuccessful())
                 targetUnit.CurrentPower += (int)(targetUnit.CurrentPower * 0.2f);
             else

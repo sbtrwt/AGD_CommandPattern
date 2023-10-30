@@ -22,6 +22,8 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted()
         {
+            GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.CLEANSE);
+
             if (IsSuccessful())
                 targetUnit.ResetStats();
             else

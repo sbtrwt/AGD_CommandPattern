@@ -14,12 +14,14 @@ namespace Command.Player
         private UnitView unitView;
 
         public int UnitID { get; private set; }
+        public UnitType UnitType => unitScriptableObject.UnitType;
+        public int CurrentHealth { get; private set; }
+        public UnitUsedState UsedState { get; private set; }
+        
         private UnitAliveState aliveState;
         private Vector3 originalPosition;
         public int CurrentPower;
         public int CurrentMaxHealth;
-        public int CurrentHealth { get; private set; }
-        public UnitUsedState UsedState { get; private set; }
 
         public UnitController(PlayerController owner, UnitScriptableObject unitScriptableObject, Vector3 unitPosition)
         {
@@ -116,10 +118,7 @@ namespace Command.Player
             unitView.transform.position = targetPosition;
 
             if (shouldPlayActionAnimation)
-            {
                 PlayActionAnimation(actionTypeToExecute);
-                GameService.Instance.SoundService.PlayAttackSFX(actionTypeToExecute, unitScriptableObject.UnitName);
-            }
 
             if (callback != null)
                 callback.Invoke();

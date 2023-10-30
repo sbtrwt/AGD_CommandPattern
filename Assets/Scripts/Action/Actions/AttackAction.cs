@@ -21,6 +21,8 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted() 
         {
+            PlayAttackSound();
+
             if (IsSuccessful())
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
             else
@@ -30,5 +32,26 @@ namespace Command.Actions
         public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
+
+        private void PlayAttackSound()
+        {
+            switch(actorUnit.UnitType)
+            {
+                case UnitType.WIZARD:
+                    GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.MAGIC_BALL);
+                    break;
+                case UnitType.SWORD_MASTER:
+                    GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.KNIFE_SLASH);
+                    break;
+                case UnitType.MAGE:
+                    GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.FIRE_ATTACK);
+                    break;
+                case UnitType.BERSERKER:
+                    GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.SWORD_SLASH);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
