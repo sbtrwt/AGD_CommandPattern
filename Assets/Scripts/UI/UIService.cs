@@ -59,7 +59,7 @@ namespace Command.UI
             switch (GameService.Instance.ReplayService.ReplayState)
             {
                 case Replay.ReplayState.ACTIVE:
-                    GameService.Instance.ReplayService.ExecuteNext();
+                    GameService.Instance.StartCoroutine(GameService.Instance.ReplayService.ExecuteNext());
                     break;
                 case Replay.ReplayState.DEACTIVE:
                     actionSelectionController.Show(executableActions);

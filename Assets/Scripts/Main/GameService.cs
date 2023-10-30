@@ -51,7 +51,7 @@ namespace Command.Main
             ActionService = new ActionService();
             InputService = new InputService();
             CommandInvoker = new CommandInvoker();
-            BattleService = new BattleService(battleScriptableObjects, backgroundImage);
+            BattleService = new BattleService(battleScriptableObjects);
             PlayerService = new PlayerService();
             uiService.Init(battleScriptableObjects.Count);
             ReplayService = new ReplayService();
