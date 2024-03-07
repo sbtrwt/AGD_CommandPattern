@@ -16,6 +16,7 @@ namespace Command.Command
         public int TargetPlayerID;
 
         // References to the actor and target units, accessible by subclasses.
+        public CommandData commandData;
         protected UnitController actorUnit;
         protected UnitController targetUnit;
 
@@ -29,5 +30,9 @@ namespace Command.Command
         /// Must be implemented by concrete subclasses.
         /// </summary>
         public abstract bool WillHitTarget();
+
+        public void SetActorUnit(UnitController actorUnit) => this.actorUnit = actorUnit;
+
+        public void SetTargetUnit(UnitController targetUnit) => this.targetUnit = targetUnit;
     }
 }
